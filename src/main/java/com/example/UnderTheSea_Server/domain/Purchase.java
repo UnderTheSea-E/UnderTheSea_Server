@@ -12,6 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "Purchase")
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +29,13 @@ public class Purchase {
     @Column(nullable = false)
     private String product;
 
-    @ColumnDefault("0")
-    private int satisfaction;
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'UNDECIDED'")
+    private PurchaseSatisfaction satisfaction;
 
-    @ColumnDefault("0")
-    private int status;
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'UNDECIDED'")
+    private PurchaseStatus status;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
