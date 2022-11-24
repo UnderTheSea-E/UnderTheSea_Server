@@ -18,14 +18,11 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long purchase_id;
 
-    /*
-    User Entitiy 생성 후 주석 풀기
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @Column(nullable = false)
     private User user;
-     */
-
+    
     @Column(nullable = false)
     private String product;
 
