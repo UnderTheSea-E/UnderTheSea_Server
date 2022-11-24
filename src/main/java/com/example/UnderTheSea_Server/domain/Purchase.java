@@ -22,7 +22,7 @@ public class Purchase {
     @JoinColumn(name = "user_id")
     @Column(nullable = false)
     private User user;
-    
+
     @Column(nullable = false)
     private String product;
 
