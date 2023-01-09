@@ -1,5 +1,6 @@
 package com.example.UnderTheSea_Server.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 @Table(name = "Plan")
 public class Plan {
     @Id
