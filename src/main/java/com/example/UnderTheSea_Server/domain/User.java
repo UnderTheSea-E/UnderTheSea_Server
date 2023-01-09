@@ -26,6 +26,9 @@ public class User {
     private String nickname;
 
     @Column(nullable = false)
+    private String profileImgUrl;
+
+    @Column(nullable = false)
     private Long character_id;
 
     @Column(nullable = false)
