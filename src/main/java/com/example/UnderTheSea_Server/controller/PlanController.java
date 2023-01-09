@@ -18,7 +18,7 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
 @RestController
 @RequiredArgsConstructor
 public class PlanController {
-    private final PlanService courseService;
+    private final PlanService planService;
     private final JwtService jwtService;
 
     /**
@@ -41,8 +41,8 @@ public class PlanController {
 
         try{
             Long userIdByJwt = jwtService.getUserId();
-            PostPlanRes postCourseRes = courseService.createPlan(userIdByJwt, postPlanReq);
-            return new BaseResponse<>(postCourseRes);
+            PostPlanRes postPlanRes = planService.createPlan(userIdByJwt, postPlanReq);
+            return new BaseResponse<>(postPlanRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
