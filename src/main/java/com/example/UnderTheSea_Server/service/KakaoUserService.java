@@ -42,7 +42,7 @@ public class KakaoUserService {
         body.add("redirect_uri", "http://localhost:8080/user/kakao/callback");
         body.add("code", code);
 
-        // HTTP 요청 보내기
+        // HTTP 요청 보냄
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(body, headers);
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> response = rt.exchange(
