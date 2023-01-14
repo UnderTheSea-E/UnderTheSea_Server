@@ -1,5 +1,6 @@
 package com.example.UnderTheSea_Server.controller;
 
+import com.example.UnderTheSea_Server.model.PostUserReq;
 import com.example.UnderTheSea_Server.service.KakaoUserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,8 @@ public class KakaoLoginController {
     private final KakaoUserService kakaoUserService;
 
     @GetMapping("/user/kakao/callback")
-    public KakaoUserInfoDto kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        return kakaoUserService.kakaoLogin(code, response);
+    public KakaoUserInfoDto kakaoLogin(@RequestParam PostUserReq postUserReq, HttpServletResponse response) throws JsonProcessingException {
+        return kakaoUserService.kakaoLogin(postUserReq, response);
     }
 
 }
