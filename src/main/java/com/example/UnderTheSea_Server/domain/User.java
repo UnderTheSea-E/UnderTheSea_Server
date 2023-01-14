@@ -1,9 +1,6 @@
 package com.example.UnderTheSea_Server.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,12 +13,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Builder
+@Data
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @Table(name = "User")
-
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,5 +92,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }
