@@ -25,7 +25,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-    private static String jwtSecretKey = "secretkey";
+    private static String jwtSecretKey = "secretkeyforunderthesea1234567890";
     //토큰 유효시간(30분)
     private static final long tokenValidTime = 30 * 60 * 1000L;
     //jwt 토큰 생성
@@ -39,7 +39,7 @@ public class JwtTokenProvider {
     //JWT 토큰 생성
     public static String createToken(User userPk, String roles){
         //JWT payload에 저장되는 정보 단위로 user 식별하는 값을 넣음
-        Claims claims = Jwts.claims().setSubject(userPk.getUser_id().toString());
+        Claims claims = Jwts.claims().setSubject(userPk.getUserId().toString());
         claims.put("roles", roles); //key-value 쌍으로 정보 저장
         Date now = new Date();
         Date expiryDay = new Date(now.getTime() + tokenValidTime);
