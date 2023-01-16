@@ -20,10 +20,11 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @Table(name = "User")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(nullable = false)
     private String email;
@@ -34,8 +35,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String profileImgUrl;
 
-    @Column(nullable = true)
-    private Long character_id;
+    @Column(name = "character_id", nullable = true)
+    private Long characterId;
 
     @Column(nullable = true)
     private String character_name;
@@ -52,6 +53,19 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Date updated_at;
 
+    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, UserStatus status, Date created_at, Date updated_at) {
+        this.userId = user_id;
+        this.email = email;
+        this.nickname = nickname;
+        this.profileImgUrl = profileImgUrl;
+        this.characterId = character_id;
+        this.character_name = character_name;
+        this.status = status;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
+    /*
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -92,4 +106,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+     */
 }
