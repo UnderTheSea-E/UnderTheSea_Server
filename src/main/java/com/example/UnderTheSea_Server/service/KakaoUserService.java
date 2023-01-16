@@ -1,10 +1,12 @@
 package com.example.UnderTheSea_Server.service;
 
+import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.controller.KakaoUserInfoDto;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.KakaoUserDto;
 import com.example.UnderTheSea_Server.jwt.JwtTokenProvider;
 import com.example.UnderTheSea_Server.model.PostUserReq;
+import com.example.UnderTheSea_Server.model.PostUserRes;
 import com.example.UnderTheSea_Server.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,17 +17,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
+
+import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_ERROR;
 
 @Service
 @RequiredArgsConstructor
-
 public class KakaoUserService {
     //private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -90,7 +91,7 @@ public class KakaoUserService {
         String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
 
-        return new KakaoUserInfoDto(id, nickname, email);
+        return new KakaoUserInfoDto(nickname, email);
     }
 
     private User registerKakaoUserIfNeed(KakaoUserInfoDto kakaoUserInfo) {
@@ -102,9 +103,11 @@ public class KakaoUserService {
 
         if (kakaoUser == null) {
             // 회원가입
-            // password: random UUID
+            /*
+            password: random UUID
             String password = UUID.randomUUID().toString();
-            //String encodedPassword = passwordEncoder.encode(password);
+            String encodedPassword = passwordEncoder.encode(password);
+             */
 
             String profile = "https://ossack.s3.ap-northeast-2.amazonaws.com/basicprofile.png";
 
@@ -115,27 +118,37 @@ public class KakaoUserService {
 
     private void kakaoUsersAuthorizationInput(Authentication authentication, HttpServletResponse response) {
         // response header에 token 추가
-        //UserDetails userDetailsImpl = ((UserDetails) authentication.getPrincipal());
-        //String token = JwtTokenUtils.generateJwtToken(userDetailsImpl);
         String token = JwtTokenProvider.createToken(kakaoUser, "user_id");
         response.addHeader("Authorization", "BEARER" + " " + token);
     }
 
-    public KakaoUserInfoDto kakaoLogin(PostUserReq postUserReq, HttpServletResponse response) throws JsonProcessingException {
+
+    public PostUserRes kakaoLogin(PostUserReq postUserReq, HttpServletResponse response) throws BaseException {
+        try {
         /*
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
          */
 
-        // 2. 토큰으로 카카오 API 호출
-        KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(postUserReq.accessToken);
+            // 2. 토큰으로 카카오 API 호출
+            KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(postUserReq.accessToken);
 
-        // 3. 카카오ID로 회원가입 처리
-        User kakaoUser = registerKakaoUserIfNeed(kakaoUserInfo);
+            // 3. 카카오ID로 회원가입 처리
+            User kakaoUser = registerKakaoUserIfNeed(kakaoUserInfo);
 
-        // 4. response Header에 JWT 토큰 추가
-        Authentication authentication = null;
-        kakaoUsersAuthorizationInput(authentication, response);
-        return kakaoUserInfo;
+            // 4. response Header에 JWT 토큰 추가
+            Authentication authentication = null;
+            kakaoUsersAuthorizationInput(authentication, response);
+
+            PostUserRes postUserRes = new PostUserRes(
+                    kakaoUser.getUserId(),
+                    kakaoUserInfo.getNickname(),
+                    kakaoUserInfo.getEmail(),
+                    kakaoUser.getProfileImgUrl()
+            );
+            return postUserRes;
+        } catch(Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 }
