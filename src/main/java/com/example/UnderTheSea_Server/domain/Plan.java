@@ -1,5 +1,7 @@
+
 package com.example.UnderTheSea_Server.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.util.Date;
 
+@Builder
 @Entity
 @Getter
 @Setter
@@ -18,21 +21,15 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long plan_id;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @Column(nullable = false)
     private User user;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "friend_id")
-    @Column(nullable = false)
-    private Friend friend ;
+    private Friend friend;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recommend_id")
-    @Column(nullable = true)
+    @Column(name = "recommend_id", nullable = true)
     private Long recommend ;
 
     @Column(nullable = false)
