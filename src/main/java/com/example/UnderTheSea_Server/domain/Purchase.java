@@ -20,7 +20,6 @@ public class Purchase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @Column(nullable = false)
     private User user;
 
     @Column(nullable = false)
