@@ -97,7 +97,7 @@ public class KakaoUserService {
         // DB 에 중복된 email이 있는지 확인
         String kakaoEmail = kakaoUserInfo.getEmail();
         String nickname = kakaoUserInfo.getNickname();
-        kakaoUser = userRepository.findByUserEmail(kakaoEmail);
+        kakaoUser = userRepository.findByEmail(kakaoEmail);
                 //.orElse(null);
 
         if (kakaoUser == null) {
