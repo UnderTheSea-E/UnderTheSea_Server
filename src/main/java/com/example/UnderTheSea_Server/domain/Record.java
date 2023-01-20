@@ -25,6 +25,10 @@ public class Record {
     @ColumnDefault("'UNSATISFIED'")
     private RecordSatisfaction satisfaction;
 
+    @Temporal(value = TemporalType.DATE)
+    @Column(nullable = false)
+    private Date date;
+
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
     private RecordStatus status;
