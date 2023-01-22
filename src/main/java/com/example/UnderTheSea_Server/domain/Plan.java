@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Builder
@@ -37,7 +38,7 @@ public class Plan {
 
     @Temporal(value = TemporalType.DATE)
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
