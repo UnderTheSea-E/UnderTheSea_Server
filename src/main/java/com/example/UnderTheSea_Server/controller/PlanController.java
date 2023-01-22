@@ -3,15 +3,17 @@ package com.example.UnderTheSea_Server.controller;
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.config.BaseResponse;
 import com.example.UnderTheSea_Server.config.BaseResponseStatus;
+import com.example.UnderTheSea_Server.domain.User;
+import com.example.UnderTheSea_Server.jwt.JwtAuthenticationFilter;
 import com.example.UnderTheSea_Server.model.PostPlanReq;
 import com.example.UnderTheSea_Server.model.PostPlanRes;
 import com.example.UnderTheSea_Server.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.http.HttpHeaders;
 
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
 
@@ -19,8 +21,7 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
 @RequiredArgsConstructor
 public class PlanController {
     private final PlanService planService;
-    private final JwtService jwtService;
-
+    
     /**
      * Post Plan API
      * [POST] /plans
@@ -29,6 +30,7 @@ public class PlanController {
     //@ResponseBody
     @PostMapping("/plans")
     public BaseResponse<PostPlanRes> createPlan(@RequestBody PostPlanReq postPlanReq) {
+
         if(postPlanReq.friend_id < 0){
             return new BaseResponse<>(POST_PLAN_EMPTY_FRIEND);
         }
@@ -40,7 +42,10 @@ public class PlanController {
         }
 
         try{
-            Long userIdByJwt = jwtService.getUserId();
+            //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Long userIdByJwt = userByJwt.getUserId();
+
             PostPlanRes postPlanRes = planService.createPlan(userIdByJwt, postPlanReq);
             return new BaseResponse<>(postPlanRes);
         } catch(BaseException exception){
