@@ -12,10 +12,12 @@ import com.example.UnderTheSea_Server.model.PostPlanRes;
 import com.example.UnderTheSea_Server.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpHeaders;
+import java.time.LocalDate;
 
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
 
@@ -62,17 +64,16 @@ public class PlanController {
      */
     //@ResponseBody
     @GetMapping("/plans")
-    public BaseResponse<GetPlanRes> selectPlans(@RequestBody GetPlanReq getPlanReq) {
-        if(getPlanReq.date == null){
+    public BaseResponse<GetPlanRes> selectPlans(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        if(date == null){
             return new BaseResponse<>(GET_PLAN_EMPTY_DATE);
         }
 
         try{
             //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Long userIdByJwt = userByJwt.getUserId();
 
-            GetPlanRes getPlanRes = planService.selectPlans(userIdByJwt, getPlanReq);
+            GetPlanRes getPlanRes = planService.selectPlans(userByJwt, date);
             return new BaseResponse<>(getPlanRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));

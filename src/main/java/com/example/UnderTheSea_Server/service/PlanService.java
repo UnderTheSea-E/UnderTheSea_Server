@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_ERROR;
@@ -53,13 +54,10 @@ public class PlanService {
 
     //날짜에 해당하는 계획들 불러오기
     @Transactional
-    public GetPlanRes selectPlans(Long userIdByJwt, GetPlanReq getCourseReq) throws BaseException {
+    public GetPlanRes selectPlans(User userByJwt, LocalDate date) throws BaseException {
         try{
-            //현재 로그인한 사용자 불러오기
-            User user = userRepository.getById(userIdByJwt);
-
             //계획 db에서 select하기
-            List<Plan> plans = planRepository.findByDateAndUser(getCourseReq.date, user);
+            List<Plan> plans = planRepository.findByUserAndDate(userByJwt, date);
 
             return new GetPlanRes(plans);
         } catch (Exception exception) {
