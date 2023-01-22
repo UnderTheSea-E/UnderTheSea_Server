@@ -123,7 +123,7 @@ public class KakaoUserService {
         // response header에 token 추가
         Token token = JwtTokenProvider.createToken(kakaoUser, "user_id");
         jwtService.login(token);
-        //response.addHeader("Authorization", "BEARER" + " " + token.getAccessToken());
+        response.addHeader("Authorization", "BEARER" + " " + token.getAccessToken());
     }
 
 
