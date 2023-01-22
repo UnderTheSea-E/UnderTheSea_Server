@@ -20,6 +20,7 @@ public enum BaseResponseStatus {
     POST_PLAN_EMPTY_FRIEND(false, 2100, "함께할 친구를 입력해주세요"),
     POST_PLAN_EMPTY_CONTENT(false, 2101, "계획의 내용을 입력해주세요."),
     POST_PLAN_EMPTY_DATE(false, 2102, "날짜를 입력해주세요."),
+    GET_PLAN_EMPTY_DATE(false, 2103, "날짜를 입력해주세요."),
 
     /**
      * 3000: Response 오류
