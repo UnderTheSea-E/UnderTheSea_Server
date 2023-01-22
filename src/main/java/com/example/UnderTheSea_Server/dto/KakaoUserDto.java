@@ -1,7 +1,5 @@
 package com.example.UnderTheSea_Server.dto;
 
-import com.example.UnderTheSea_Server.domain.Friend;
-import com.example.UnderTheSea_Server.domain.Plan;
 import com.example.UnderTheSea_Server.domain.User;
 import org.springframework.stereotype.Repository;
 
