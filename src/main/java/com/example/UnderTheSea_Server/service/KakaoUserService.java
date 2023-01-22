@@ -4,7 +4,9 @@ import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.controller.KakaoUserInfoDto;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.KakaoUserDto;
+import com.example.UnderTheSea_Server.jwt.JwtService;
 import com.example.UnderTheSea_Server.jwt.JwtTokenProvider;
+import com.example.UnderTheSea_Server.jwt.Token;
 import com.example.UnderTheSea_Server.model.PostUserReq;
 import com.example.UnderTheSea_Server.model.PostUserRes;
 import com.example.UnderTheSea_Server.repository.UserRepository;
@@ -31,6 +33,7 @@ public class KakaoUserService {
     //private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     public final KakaoUserDto kakaoUserDto;
+    public final JwtService jwtService;
     private User kakaoUser;
 
     /*
@@ -116,10 +119,11 @@ public class KakaoUserService {
         return kakaoUser;
     }
 
-    private void kakaoUsersAuthorizationInput(Authentication authentication, HttpServletResponse response) {
+    private void kakaoUsersAuthorizationInput(HttpServletResponse response) {
         // response header에 token 추가
-        String token = JwtTokenProvider.createToken(kakaoUser, "user_id");
-        response.addHeader("Authorization", "BEARER" + " " + token);
+        Token token = JwtTokenProvider.createToken(kakaoUser, "user_id");
+        jwtService.login(token);
+        //response.addHeader("Authorization", "BEARER" + " " + token.getAccessToken());
     }
 
 
@@ -137,8 +141,8 @@ public class KakaoUserService {
             User kakaoUser = registerKakaoUserIfNeed(kakaoUserInfo);
 
             // 4. response Header에 JWT 토큰 추가
-            Authentication authentication = null;
-            kakaoUsersAuthorizationInput(authentication, response);
+            //Authentication authentication = null;
+            kakaoUsersAuthorizationInput(response);
 
             PostUserRes postUserRes = new PostUserRes(
                     kakaoUser.getUserId(),
