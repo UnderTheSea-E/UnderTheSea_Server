@@ -1,10 +1,7 @@
 
 package com.example.UnderTheSea_Server.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Plan")
 public class Plan {
@@ -31,12 +29,12 @@ public class Plan {
     private Friend friend;
 
     @Column(name = "recommend_id", nullable = true)
-    private Long recommend ;
+    private Long recommend;
 
     @Column(nullable = false)
     private String content;
 
-    @Temporal(value = TemporalType.DATE)
+    //@Temporal(value = TemporalType.DATE)
     @Column(nullable = false)
     private LocalDate date;
 
