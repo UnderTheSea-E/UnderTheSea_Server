@@ -5,6 +5,8 @@ import com.example.UnderTheSea_Server.config.BaseResponse;
 import com.example.UnderTheSea_Server.config.BaseResponseStatus;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.jwt.JwtAuthenticationFilter;
+import com.example.UnderTheSea_Server.model.GetPlanReq;
+import com.example.UnderTheSea_Server.model.GetPlanRes;
 import com.example.UnderTheSea_Server.model.PostPlanReq;
 import com.example.UnderTheSea_Server.model.PostPlanRes;
 import com.example.UnderTheSea_Server.service.PlanService;
@@ -42,7 +44,7 @@ public class PlanController {
         }
 
         try{
-            //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+            System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Long userIdByJwt = userByJwt.getUserId();
 
@@ -53,5 +55,28 @@ public class PlanController {
         }
     }
 
+    /**
+     * Get Plan API
+     * [GET] /plans
+     * @return BaseResponse<GetPlanRes>
+     */
+    //@ResponseBody
+    @GetMapping("/plans")
+    public BaseResponse<GetPlanRes> selectPlans(@RequestBody GetPlanReq getPlanReq) {
+        if(getPlanReq.date == null){
+            return new BaseResponse<>(GET_PLAN_EMPTY_DATE);
+        }
+
+        try{
+            //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Long userIdByJwt = userByJwt.getUserId();
+
+            GetPlanRes getPlanRes = planService.selectPlans(userIdByJwt, getPlanReq);
+            return new BaseResponse<>(getPlanRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 }
