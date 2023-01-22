@@ -14,7 +14,7 @@ public class PlanDto {
     private Timestamp created_at = new Timestamp(new Date().getTime());
     private Timestamp updated_at = new Timestamp(new Date().getTime());
 
-    public Plan insertPlan(User user, Friend freind, Long recommend_id, String content, LocalDate date) {
+    public Plan insertPlan(User user, User freind, Long recommend_id, String content, LocalDate date) {
         Plan planEntity = Plan.builder()
                 .user(user)
                 .friend(freind)

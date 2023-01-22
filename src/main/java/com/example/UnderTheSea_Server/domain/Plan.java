@@ -26,7 +26,7 @@ public class Plan {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "friend_id")
-    private Friend friend;
+    private User friend;
 
     @Column(name = "recommend_id", nullable = true)
     private Long recommend;
