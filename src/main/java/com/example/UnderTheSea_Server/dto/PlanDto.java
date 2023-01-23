@@ -2,6 +2,7 @@ package com.example.UnderTheSea_Server.dto;
 
 import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.Plan;
+import com.example.UnderTheSea_Server.domain.PlanStatus;
 import com.example.UnderTheSea_Server.domain.User;
 import org.springframework.stereotype.Repository;
 
@@ -18,9 +19,9 @@ public class PlanDto {
         Plan planEntity = Plan.builder()
                 .user(user)
                 .friend(freind)
-                .recommend(recommend_id)
                 .content(content)
                 .date(date)
+                .status(PlanStatus.ACTIVE)
                 .created_at(created_at)
                 .updated_at(updated_at)
                 .build();
