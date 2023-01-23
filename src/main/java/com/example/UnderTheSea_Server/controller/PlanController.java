@@ -84,7 +84,7 @@ public class PlanController {
      */
     //@ResponseBody
     @PutMapping("/plans")
-    public BaseResponse<String> updatePlans(@RequestBody PutPlanReq putPlanReq) {
+    public BaseResponse<PutPlanRes> updatePlans(@RequestBody PutPlanReq putPlanReq) {
         if(putPlanReq.plan_id == null){
             return new BaseResponse<>(PUT_PLAN_EMPTY_ID);
         }
@@ -110,10 +110,9 @@ public class PlanController {
             //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-//            PutPlanRes putPlanRes = planService.updatePlans(userByJwt, putPlanReq);
-            planService.updatePlans(userByJwt, putPlanReq);
+            PutPlanRes putPlanRes = planService.updatePlans(userByJwt, putPlanReq);
 
-            return new BaseResponse<>("success");
+            return new BaseResponse<>(putPlanRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }

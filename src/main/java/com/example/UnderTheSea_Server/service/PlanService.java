@@ -62,7 +62,7 @@ public class PlanService {
     }
 
     //계획 수정하기
-    public void updatePlans(User userByJwt, PutPlanReq putPlanReq) throws BaseException {
+    public PutPlanRes updatePlans(User userByJwt, PutPlanReq putPlanReq) throws BaseException {
         try{
             User friend = userRepository.findById(putPlanReq.friend_id).get();
 
@@ -74,7 +74,7 @@ public class PlanService {
                     userByJwt
             );
 
-            //return new PutPlanRes();
+            return new PutPlanRes(putPlanReq.plan_id);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
