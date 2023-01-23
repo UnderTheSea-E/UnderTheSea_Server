@@ -5,10 +5,7 @@ import com.example.UnderTheSea_Server.config.BaseResponse;
 import com.example.UnderTheSea_Server.config.BaseResponseStatus;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.jwt.JwtAuthenticationFilter;
-import com.example.UnderTheSea_Server.model.GetPlanReq;
-import com.example.UnderTheSea_Server.model.GetPlanRes;
-import com.example.UnderTheSea_Server.model.PostPlanReq;
-import com.example.UnderTheSea_Server.model.PostPlanRes;
+import com.example.UnderTheSea_Server.model.*;
 import com.example.UnderTheSea_Server.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,4 +77,45 @@ public class PlanController {
         }
     }
 
+    /**
+     * Put Plan API
+     * [PUT] /plan
+     * @return BaseResponse<PutPlanRes>
+     */
+    //@ResponseBody
+    @PutMapping("/plans")
+    public BaseResponse<String> updatePlans(@RequestBody PutPlanReq putPlanReq) {
+        if(putPlanReq.plan_id == null){
+            return new BaseResponse<>(PUT_PLAN_EMPTY_ID);
+        }
+
+        if(putPlanReq.plan_id < 0){
+            return new BaseResponse<>(PUT_PLAN_WRONG_ID);
+        }
+
+        if(putPlanReq.friend_id == null){
+            return new BaseResponse<>(POST_PLAN_EMPTY_FRIEND);
+        }
+
+        if(putPlanReq.friend_id < 0){
+            return new BaseResponse<>(POST_PLAN_WRONG_FRIEND);
+        }
+
+        if(putPlanReq.content.isEmpty()){
+            return new BaseResponse<>(POST_PLAN_EMPTY_CONTENT);
+        }
+
+
+        try{
+            //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+//            PutPlanRes putPlanRes = planService.updatePlans(userByJwt, putPlanReq);
+            planService.updatePlans(userByJwt, putPlanReq);
+
+            return new BaseResponse<>("success");
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

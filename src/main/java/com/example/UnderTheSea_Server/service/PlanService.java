@@ -5,10 +5,7 @@ import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.Plan;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.PlanDto;
-import com.example.UnderTheSea_Server.model.GetPlanReq;
-import com.example.UnderTheSea_Server.model.GetPlanRes;
-import com.example.UnderTheSea_Server.model.PostPlanReq;
-import com.example.UnderTheSea_Server.model.PostPlanRes;
+import com.example.UnderTheSea_Server.model.*;
 import com.example.UnderTheSea_Server.repository.FriendRepository;
 import com.example.UnderTheSea_Server.repository.PlanRepository;
 import com.example.UnderTheSea_Server.repository.UserRepository;
@@ -42,7 +39,6 @@ public class PlanService {
                     planDto.insertPlan(
                             user,
                             friend,
-                            postPlanReq.recommend_id,
                             postPlanReq.content,
                             postPlanReq.date));
 
@@ -60,6 +56,25 @@ public class PlanService {
             List<Plan> plans = planRepository.findByUserAndDate(userByJwt, date);
 
             return new GetPlanRes(plans);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    //계획 수정하기
+    public void updatePlans(User userByJwt, PutPlanReq putPlanReq) throws BaseException {
+        try{
+            User friend = userRepository.findById(putPlanReq.friend_id).get();
+
+            //계획 db에서 update하기
+            planRepository.updateFriendAndContent(
+                    friend,
+                    putPlanReq.content,
+                    putPlanReq.plan_id,
+                    userByJwt
+            );
+
+            //return new PutPlanRes();
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
