@@ -1,6 +1,7 @@
 package com.example.UnderTheSea_Server.dto;
 
 import com.example.UnderTheSea_Server.domain.User;
+import com.example.UnderTheSea_Server.domain.UserStatus;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -16,6 +17,7 @@ public class KakaoUserDto {
                 .email(email)
                 .nickname(nickname)
                 .profileImgUrl(profile)
+                .status(UserStatus.ACTIVE)
                 .created_at(created_at)
                 .updated_at(updated_at)
                 .build();
