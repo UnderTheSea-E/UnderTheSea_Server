@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostPlanReq {
     public Long friend_id;
-    public Long recommend_id;
     public String content;
     public LocalDate date;
 }
