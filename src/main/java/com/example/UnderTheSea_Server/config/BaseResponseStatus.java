@@ -16,10 +16,14 @@ public enum BaseResponseStatus {
      * 2000: Request 오류
      */
     // [POST] /plans
-    POST_PLAN_EMPTY_USER(false, 2100, "계획을 실천할 사용자를 입력해주세요"),
-    POST_PLAN_EMPTY_FRIEND(false, 2100, "함께할 친구를 입력해주세요"),
-    POST_PLAN_EMPTY_CONTENT(false, 2101, "계획의 내용을 입력해주세요."),
-    POST_PLAN_EMPTY_DATE(false, 2102, "날짜를 입력해주세요."),
+    POST_PLAN_EMPTY_USER(false, 400, "계획을 실천할 사용자를 입력해주세요"),
+    POST_PLAN_EMPTY_FRIEND(false, 400, "함께할 친구를 입력해주세요"),
+    POST_PLAN_WRONG_FRIEND(false, 400, "친구로 입력한 사용자가 존재하지 않습니다."),
+    POST_PLAN_EMPTY_CONTENT(false, 400, "계획의 내용을 입력해주세요."),
+    POST_PLAN_EMPTY_DATE(false, 400, "날짜를 입력해주세요."),
+    GET_PLAN_EMPTY_DATE(false, 400, "날짜를 입력해주세요."),
+    PUT_PLAN_EMPTY_ID(false, 400, "계획 식별자를 입력해주세요."),
+    PUT_PLAN_WRONG_ID(false, 400, "존재하지 않는 계획 식별자입니다."),
 
     /**
      * 3000: Response 오류
