@@ -30,9 +30,6 @@ public class Plan {
     @JoinColumn(name = "friend_id")
     private User friend;
 
-    @Column(name = "recommend_id", nullable = true)
-    private Long recommend;
-
     @Column(nullable = false)
     private String content;
 
