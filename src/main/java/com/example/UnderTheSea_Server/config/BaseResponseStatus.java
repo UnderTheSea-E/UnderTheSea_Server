@@ -24,6 +24,10 @@ public enum BaseResponseStatus {
     GET_PLAN_EMPTY_DATE(false, 400, "날짜를 입력해주세요."),
     PUT_PLAN_EMPTY_ID(false, 400, "계획 식별자를 입력해주세요."),
     PUT_PLAN_WRONG_ID(false, 400, "존재하지 않는 계획 식별자입니다."),
+    PUT_CHARACTER_WRONG_ID(false, 400, "존재하지 않는 캐릭터 식별자입니다."),
+    PUT_CHARACTER_EMPTY_ID(false, 400, "캐릭터 식별자를 입력해주세요."),
+    PUT_CHARACTER_EMPTY_NAME(false, 400, "캐릭터 이름을 입력해주세요."),
+    PUT_CHARACTER_LENGTH_NAME(false, 400, "캐릭터 이름을 10자 이하로 입력해주세요."),
 
     /**
      * 3000: Response 오류

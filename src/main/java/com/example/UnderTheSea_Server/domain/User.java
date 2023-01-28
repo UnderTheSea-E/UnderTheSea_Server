@@ -39,8 +39,8 @@ public class User implements UserDetails{
     @Column(name = "character_id", nullable = true)
     private Long characterId;
 
-    @Column(nullable = true)
-    private String character_name;
+    @Column(name = "character_name", nullable = true)
+    private String characterName;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
@@ -61,7 +61,7 @@ public class User implements UserDetails{
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
         this.characterId = character_id;
-        this.character_name = character_name;
+        this.characterName = character_name;
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
