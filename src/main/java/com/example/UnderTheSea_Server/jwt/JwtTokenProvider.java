@@ -28,8 +28,8 @@ import java.util.List;
 public class JwtTokenProvider {
     private static String jwtSecretKey = "secretkeyforunderthesea1234567890";
     //토큰 유효시간
-    private static final long accessTokenValidTime = 30 * 60 * 1000L;
-    private static final long refreshTokenValidTime = 300 * 60 * 1000L;
+    private static final long accessTokenValidTime = 300 * 60 * 1000L;
+    private static final long refreshTokenValidTime = 3000 * 60 * 1000L;
     //jwt 토큰 생성
     private final UserDetailsService userDetailsService;
 
