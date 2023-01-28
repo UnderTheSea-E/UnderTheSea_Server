@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_ERROR;
 
 

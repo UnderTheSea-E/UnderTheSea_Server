@@ -43,7 +43,7 @@ public class UserController {
 
         try{
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            //System.out.println(userByJwt);
+
             PutCharacterRes putCharacterRes = userService.createCharacter(userByJwt, putCharacterReq);
             return new BaseResponse<>(putCharacterRes);
         } catch(BaseException exception){
