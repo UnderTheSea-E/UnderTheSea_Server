@@ -5,6 +5,8 @@ import com.example.UnderTheSea_Server.config.BaseResponse;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.model.PutCharacterReq;
 import com.example.UnderTheSea_Server.model.PutCharacterRes;
+import com.example.UnderTheSea_Server.model.PutMileageReq;
+import com.example.UnderTheSea_Server.model.PutMileageRes;
 import com.example.UnderTheSea_Server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +20,9 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * Post Character API
-     * [POST] /character
-     * @return BaseResponse<PostCharacterRes>
+     * Put Character API
+     * [PUT] /character
+     * @return BaseResponse<PutCharacterRes>
      */
     //@ResponseBody
     @PutMapping("/character")
@@ -46,6 +48,33 @@ public class UserController {
 
             PutCharacterRes putCharacterRes = userService.createCharacter(userByJwt, putCharacterReq);
             return new BaseResponse<>(putCharacterRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * Put Mileage API
+     * [PUT] /mileage
+     * @return BaseResponse<PutMileageRes>
+     * 마일리지 update
+     */
+    //@ResponseBody
+    @PutMapping("/mileage")
+    public BaseResponse<PutMileageRes> updateMileage(@RequestBody PutMileageReq putMileageReq) {
+        if(putMileageReq.mileage == null){
+            return new BaseResponse<>(PUT_MILEAGE_EMPTY_COUNT);
+        }
+
+        if(putMileageReq.mileage <= 0){
+            return new BaseResponse<>(PUT_MILEAGE_WRONG_COUNT);
+        }
+
+        try{
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            PutMileageRes putMileageRes = userService.updateMileage(userByJwt, putMileageReq);
+            return new BaseResponse<>(putMileageRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
