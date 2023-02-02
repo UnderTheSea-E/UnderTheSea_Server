@@ -28,6 +28,8 @@ public enum BaseResponseStatus {
     PUT_CHARACTER_EMPTY_ID(false, 400, "캐릭터 식별자를 입력해주세요."),
     PUT_CHARACTER_EMPTY_NAME(false, 400, "캐릭터 이름을 입력해주세요."),
     PUT_CHARACTER_LENGTH_NAME(false, 400, "캐릭터 이름을 10자 이하로 입력해주세요."),
+    PUT_MILEAGE_EMPTY_COUNT(false, 400, "추가할 마일리지를 입력해주세요."),
+    PUT_MILEAGE_WRONG_COUNT(false, 400, "마일리지는 1 이상의 수로 입력해주세요."),
 
     /**
      * 3000: Response 오류
