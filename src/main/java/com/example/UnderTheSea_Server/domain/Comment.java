@@ -28,6 +28,9 @@ public class Comment {
     @JoinColumn(name = "record_id")
     private Record record;
 
+    @Column(nullable = true)
+    private Long likes;
+
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date created_at;
