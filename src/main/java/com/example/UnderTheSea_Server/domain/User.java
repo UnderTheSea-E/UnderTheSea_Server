@@ -42,6 +42,9 @@ public class User implements UserDetails{
     @Column(name = "character_name", nullable = true)
     private String characterName;
 
+    @Column(name = "mileage", nullable = true)
+    private Long Mileage;
+
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
     private UserStatus status;
