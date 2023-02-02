@@ -42,7 +42,7 @@ public class User implements UserDetails{
     @Column(name = "character_name", nullable = true)
     private String characterName;
 
-    @Column(name = "mileage", nullable = true)
+    @Column(nullable = true)
     private Long mileage;
 
     @Enumerated(EnumType.STRING)
