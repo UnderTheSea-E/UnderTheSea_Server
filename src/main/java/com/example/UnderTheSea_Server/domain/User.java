@@ -43,7 +43,7 @@ public class User implements UserDetails{
     private String characterName;
 
     @Column(name = "mileage", nullable = true)
-    private Long Mileage;
+    private Long mileage;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
@@ -58,13 +58,14 @@ public class User implements UserDetails{
     private Date updated_at;
 
     @Builder
-    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, UserStatus status, Date created_at, Date updated_at) {
+    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, Long mileage, UserStatus status, Date created_at, Date updated_at) {
         this.userId = user_id;
         this.email = email;
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
         this.characterId = character_id;
         this.characterName = character_name;
+        this.mileage = mileage;
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
