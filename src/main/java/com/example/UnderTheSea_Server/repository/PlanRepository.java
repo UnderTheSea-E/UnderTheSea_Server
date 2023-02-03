@@ -18,9 +18,11 @@ import java.util.Optional;
 public interface PlanRepository extends JpaRepository<Plan, Long> {
     List<Plan> findByUserAndDate(User user, LocalDate date);
 
+    Plan findByUserAndPlanId(User user, Long plan_id);
+
     @Modifying
     @Transactional
-    @Query("UPDATE Plan p set p.friend = :friend, p.content = :content where p.plan_id = :plan_id and p.user = :user")
+    @Query("UPDATE Plan p set p.friend = :friend, p.content = :content where p.planId = :plan_id and p.user = :user")
     void updateFriendAndContent(@Param("friend") User friend,
                     @Param("content") String content,
                     @Param("plan_id") Long plan_id,
