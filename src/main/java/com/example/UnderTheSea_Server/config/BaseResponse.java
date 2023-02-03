@@ -10,7 +10,6 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.SUCCESS;
 @Getter
 @AllArgsConstructor
 @JsonPropertyOrder({"isSuccess", "code", "message", "result"})
-
 public class BaseResponse<T> {
     @JsonProperty("isSuccess")
     private final Boolean isSuccess;
@@ -33,5 +32,4 @@ public class BaseResponse<T> {
         this.message = status.getMessage();
         this.code = status.getCode();
     }
-
 }

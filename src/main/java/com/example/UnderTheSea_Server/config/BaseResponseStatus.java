@@ -5,7 +5,6 @@ import lombok.Getter;
 /**
  * 에러 코드 관리
  */
-
 @Getter
 public enum BaseResponseStatus {
     /**
@@ -16,10 +15,27 @@ public enum BaseResponseStatus {
     /**
      * 400: Request 오류
      */
-    // [POST] /plans
-    POST_RECORD_EMPTY_IMGURL(false, 200, "기록할 사진을 업로드해주세요"),
-    POST_RECORD_EMPTY_CONTENT(false, 200, "기록의 내용을 입력해주세요."),
-    POST_RECORD_EMPTY_SATISFACTION(false, 200, "만족/불만족을 입력해주세요."),
+    // [POST] /plans / records
+    POST_PLAN_EMPTY_USER(false, 400, "계획을 실천할 사용자를 입력해주세요"),
+    POST_PLAN_EMPTY_FRIEND(false, 400, "함께할 친구를 입력해주세요"),
+    POST_PLAN_WRONG_FRIEND(false, 400, "친구로 입력한 사용자가 존재하지 않습니다."),
+    POST_PLAN_EMPTY_CONTENT(false, 400, "계획의 내용을 입력해주세요."),
+    POST_PLAN_EMPTY_DATE(false, 400, "날짜를 입력해주세요."),
+    GET_PLAN_EMPTY_DATE(false, 400, "날짜를 입력해주세요."),
+    PUT_PLAN_EMPTY_ID(false, 400, "계획 식별자를 입력해주세요."),
+    PUT_PLAN_WRONG_ID(false, 400, "존재하지 않는 계획 식별자입니다."),
+    PUT_CHARACTER_WRONG_ID(false, 400, "존재하지 않는 캐릭터 식별자입니다."),
+    PUT_CHARACTER_EMPTY_ID(false, 400, "캐릭터 식별자를 입력해주세요."),
+    PUT_CHARACTER_EMPTY_NAME(false, 400, "캐릭터 이름을 입력해주세요."),
+    PUT_CHARACTER_LENGTH_NAME(false, 400, "캐릭터 이름을 10자 이하로 입력해주세요."),
+    PUT_MILEAGE_EMPTY_COUNT(false, 400, "추가할 마일리지를 입력해주세요."),
+    PUT_MILEAGE_WRONG_COUNT(false, 400, "마일리지는 1 이상의 수로 입력해주세요."),
+
+    POST_RECORD_EMPTY_IMGURL(false, 400, "기록의 이미지를 업로드해주세요."),
+
+    POST_RECORD_EMPTY_CONTENT(false, 400, "기록의 내용을 입력해주세요"),
+
+    POST_RECORD_EMPTY_SATISFACTION(false, 400, "만족도를 입력해주세요."),
 
     /**
      * 400: Response 오류

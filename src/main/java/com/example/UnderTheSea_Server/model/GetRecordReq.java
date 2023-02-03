@@ -4,4 +4,6 @@ package com.example.UnderTheSea_Server.model;
 
 public class GetRecordReq {
 
+
+
 }

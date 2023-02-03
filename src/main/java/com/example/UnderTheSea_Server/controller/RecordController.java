@@ -6,11 +6,15 @@ import com.example.UnderTheSea_Server.config.BaseResponse;
 import com.example.UnderTheSea_Server.model.PostRecordReq;
 import com.example.UnderTheSea_Server.model.PostRecordRes;
 import com.example.UnderTheSea_Server.service.RecordService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.example.UnderTheSea_Server.jwt.JwtService
+import org.springframework.web.bind.annotation.RestController;
 
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
-
+@RestController
+@RequiredArgsConstructor
 public class RecordController {
 
     private final RecordService recordService;

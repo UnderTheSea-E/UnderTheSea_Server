@@ -4,9 +4,7 @@ import com.example.UnderTheSea_Server.domain.Record;
 import com.example.UnderTheSea_Server.domain.*;
 import org.springframework.stereotype.Repository;
 
-import java.lang.Record;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Repository
@@ -14,7 +12,7 @@ public class RecordDto {
     private Timestamp created_at = new Timestamp(new Date().getTime());
     private Timestamp updated_at = new Timestamp(new Date().getTime());
 
-    public Record insertRecord(String img_url, String content) {
+    public Record insertRecord(String img_url, String content, int satisfaction) {
         com.example.UnderTheSea_Server.domain.Record recordEntity = Record.builder()
                 .img_url(img_url)
                 .content(content)
@@ -25,4 +23,5 @@ public class RecordDto {
                 .build();
         return recordEntity;
     }
+}
 
