@@ -2,18 +2,14 @@ package com.example.UnderTheSea_Server.controller;
 
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.config.BaseResponse;
-import com.example.UnderTheSea_Server.config.BaseResponseStatus;
 import com.example.UnderTheSea_Server.domain.User;
-import com.example.UnderTheSea_Server.jwt.JwtAuthenticationFilter;
 import com.example.UnderTheSea_Server.model.*;
 import com.example.UnderTheSea_Server.service.PlanService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpHeaders;
 import java.time.LocalDate;
 
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
@@ -57,11 +53,11 @@ public class PlanController {
     /**
      * Get Plan API
      * [GET] /plans
-     * @return BaseResponse<GetPlanRes>
+     * @return BaseResponse<GetPlansRes>
      */
     //@ResponseBody
     @GetMapping("/plans")
-    public BaseResponse<GetPlanRes> selectPlans(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+    public BaseResponse<GetPlansRes> selectPlans(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         if(date == null){
             return new BaseResponse<>(GET_PLAN_EMPTY_DATE);
         }
@@ -70,7 +66,34 @@ public class PlanController {
             //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            GetPlanRes getPlanRes = planService.selectPlans(userByJwt, date);
+            GetPlansRes getPlansRes = planService.selectPlans(userByJwt, date);
+            return new BaseResponse<>(getPlansRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * Get Plan API
+     * [GET] /plans
+     * @return BaseResponse<GetPlanRes>
+     */
+    //@ResponseBody
+    @GetMapping("/plan")
+    public BaseResponse<GetPlanRes> selectPlan(@RequestParam("plan_id") Long plan_id) {
+        if(plan_id == null){
+            return new BaseResponse<>(GET_PLAN_EMPTY_ID);
+        }
+
+        if(plan_id < 0){
+            return new BaseResponse<>(GET_PLAN_WRONG_ID);
+        }
+
+        try{
+            //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            GetPlanRes getPlanRes = planService.selectPlan(userByJwt, plan_id);
             return new BaseResponse<>(getPlanRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
