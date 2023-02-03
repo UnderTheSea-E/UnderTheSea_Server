@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -26,6 +27,10 @@ public class Record {
 
     @Column(nullable = true)
     private Integer satisfaction;
+
+    @Temporal(value = TemporalType.DATE)
+    @Column(nullable = false)
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
