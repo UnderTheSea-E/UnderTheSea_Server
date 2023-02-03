@@ -4,8 +4,10 @@ import com.example.UnderTheSea_Server.domain.Plan;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetPlanRes {
-    public Plan plan;
+public class GetPlansRes {
+    public List<Plan> plans;
 }

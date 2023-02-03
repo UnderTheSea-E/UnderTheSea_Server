@@ -10,6 +10,6 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetPlanReq {
+public class GetPlansReq {
     public LocalDate date;
 }
