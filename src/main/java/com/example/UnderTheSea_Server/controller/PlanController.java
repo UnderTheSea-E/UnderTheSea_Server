@@ -24,7 +24,6 @@ public class PlanController {
      * [POST] /plans
      * @return BaseResponse<PostPlanRes>
      */
-    //@ResponseBody
     @PostMapping("/plans")
     public BaseResponse<PostPlanRes> createPlan(@RequestBody PostPlanReq postPlanReq) {
 
@@ -51,11 +50,11 @@ public class PlanController {
     }
 
     /**
-     * Get Plan API
+     * 날짜에 해당하는 모든 일정
+     * Get Plans API
      * [GET] /plans
      * @return BaseResponse<GetPlansRes>
      */
-    //@ResponseBody
     @GetMapping("/plans")
     public BaseResponse<GetPlansRes> selectPlans(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         if(date == null){
@@ -74,6 +73,7 @@ public class PlanController {
     }
 
     /**
+     * 특정 식별자에 해당하는 상세 일정
      * Get Plan API
      * [GET] /plans
      * @return BaseResponse<GetPlanRes>
@@ -105,7 +105,6 @@ public class PlanController {
      * [PUT] /plan
      * @return BaseResponse<PutPlanRes>
      */
-    //@ResponseBody
     @PutMapping("/plans")
     public BaseResponse<PutPlanRes> updatePlans(@RequestBody PutPlanReq putPlanReq) {
         if(putPlanReq.plan_id == null){
