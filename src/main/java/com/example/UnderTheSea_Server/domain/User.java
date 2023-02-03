@@ -1,5 +1,6 @@
 package com.example.UnderTheSea_Server.domain;
 
+import io.swagger.annotations.Contact;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,6 +54,20 @@ public class User implements UserDetails {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date updated_at;
+
+
+    @Builder
+    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, UserStatus status, Date created_at, Date updated_at) {
+        this.user_id = user_id;
+        this.email = email;
+        this.nickname = nickname;
+        this.profileImgUrl = profileImgUrl;
+        this.character_id = character_id;
+        this.character_name = character_name;
+        this.status = status;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

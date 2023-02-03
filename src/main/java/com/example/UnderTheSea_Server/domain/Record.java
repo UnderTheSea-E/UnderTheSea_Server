@@ -1,14 +1,17 @@
 package com.example.UnderTheSea_Server.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,9 +24,8 @@ public class Record {
     @Column(nullable = true)
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    @ColumnDefault("'UNSATISFIED'")
-    private RecordSatisfaction satisfaction;
+    @Column(nullable = true)
+    private int satisfaction;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
