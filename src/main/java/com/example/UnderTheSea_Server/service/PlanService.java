@@ -1,12 +1,10 @@
 package com.example.UnderTheSea_Server.service;
 
 import com.example.UnderTheSea_Server.config.BaseException;
-import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.Plan;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.PlanDto;
 import com.example.UnderTheSea_Server.model.*;
-import com.example.UnderTheSea_Server.repository.FriendRepository;
 import com.example.UnderTheSea_Server.repository.PlanRepository;
 import com.example.UnderTheSea_Server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +40,7 @@ public class PlanService {
                             postPlanReq.content,
                             postPlanReq.date));
 
-            return new PostPlanRes(plan.getPlan_id());
+            return new PostPlanRes(plan.getPlanId());
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
@@ -50,12 +48,24 @@ public class PlanService {
 
     //날짜에 해당하는 계획들 불러오기
     @Transactional
-    public GetPlanRes selectPlans(User userByJwt, LocalDate date) throws BaseException {
+    public GetPlansRes selectPlans(User userByJwt, LocalDate date) throws BaseException {
         try{
             //계획 db에서 select하기
             List<Plan> plans = planRepository.findByUserAndDate(userByJwt, date);
 
-            return new GetPlanRes(plans);
+            return new GetPlansRes(plans);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    @Transactional
+    public GetPlanRes selectPlan(User userByJwt, Long plan_id) throws BaseException {
+        try{
+            //계획 db에서 select하기
+            Plan plan = planRepository.findByUserAndPlanId(userByJwt, plan_id);
+
+            return new GetPlanRes(plan);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

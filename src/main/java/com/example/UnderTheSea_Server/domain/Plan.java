@@ -19,7 +19,8 @@ import java.util.Date;
 public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long plan_id;
+    @JoinColumn(name = "plan_id")
+    private Long planId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
