@@ -3,7 +3,7 @@ package com.example.UnderTheSea_Server.service;
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.controller.KakaoUserInfoDto;
 import com.example.UnderTheSea_Server.domain.User;
-import com.example.UnderTheSea_Server.dto.KakaoUserDto;
+import com.example.UnderTheSea_Server.dto.UserDto;
 import com.example.UnderTheSea_Server.jwt.JwtService;
 import com.example.UnderTheSea_Server.jwt.JwtTokenProvider;
 import com.example.UnderTheSea_Server.jwt.Token;
@@ -18,7 +18,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -32,7 +31,7 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_
 public class KakaoUserService {
     //private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    public final KakaoUserDto kakaoUserDto;
+    public final UserDto userDto;
     public final JwtService jwtService;
     private User kakaoUser;
 
@@ -114,7 +113,7 @@ public class KakaoUserService {
 
             String profile = "https://ossack.s3.ap-northeast-2.amazonaws.com/basicprofile.png";
 
-            kakaoUser = userRepository.save(kakaoUserDto.insertUser(kakaoEmail, nickname, profile));
+            kakaoUser = userRepository.save(userDto.insertUser(kakaoEmail, nickname, profile));
         }
         return kakaoUser;
     }
