@@ -1,5 +1,6 @@
 package com.example.UnderTheSea_Server.domain;
 
+import io.swagger.annotations.Contact;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,14 +14,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Builder
 @Data
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "User")
-public class User {
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -53,6 +54,7 @@ public class User {
     @Column(nullable = false)
     private Date updated_at;
 
+    @Builder
     public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, UserStatus status, Date created_at, Date updated_at) {
         this.userId = user_id;
         this.email = email;
@@ -65,10 +67,9 @@ public class User {
         this.updated_at = updated_at;
     }
 
-    /*
     @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
     private List<String> roles = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -84,7 +85,7 @@ public class User {
 
     @Override
     public String getUsername() {
-        return user_id.toString();
+        return userId.toString();
     }
 
     @Override
@@ -106,5 +107,4 @@ public class User {
     public boolean isEnabled() {
         return true;
     }
-     */
 }

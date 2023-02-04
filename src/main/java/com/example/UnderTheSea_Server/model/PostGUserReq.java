@@ -3,8 +3,10 @@ package com.example.UnderTheSea_Server.model;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
-public class PostPlanRes {
-    public Long plan_id;
+@AllArgsConstructor
+public class PostGUserReq {
+    public String nickname;
+    public String email;
+    public String profileImgUrl;
 }

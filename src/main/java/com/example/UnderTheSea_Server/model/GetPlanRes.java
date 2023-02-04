@@ -1,10 +1,11 @@
 package com.example.UnderTheSea_Server.model;
 
+import com.example.UnderTheSea_Server.domain.Plan;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
-public class PostPlanRes {
-    public Long plan_id;
+@AllArgsConstructor
+public class GetPlanRes {
+    public Plan plan;
 }

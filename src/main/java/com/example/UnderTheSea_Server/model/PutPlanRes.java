@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostPlanRes {
+public class PutPlanRes {
     public Long plan_id;
 }
