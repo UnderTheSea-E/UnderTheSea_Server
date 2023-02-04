@@ -21,6 +21,8 @@ public enum BaseResponseStatus {
     POST_PLAN_WRONG_FRIEND(false, 400, "친구로 입력한 사용자가 존재하지 않습니다."),
     POST_PLAN_EMPTY_CONTENT(false, 400, "계획의 내용을 입력해주세요."),
     POST_PLAN_EMPTY_DATE(false, 400, "날짜를 입력해주세요."),
+    GET_PLAN_EMPTY_ID(false, 400, "계획 식별자를 입력해주세요."),
+    GET_PLAN_WRONG_ID(false, 400, "계획 식별자를 0이상의 수로 입력해주세요."),
     GET_PLAN_EMPTY_DATE(false, 400, "날짜를 입력해주세요."),
     PUT_PLAN_EMPTY_ID(false, 400, "계획 식별자를 입력해주세요."),
     PUT_PLAN_WRONG_ID(false, 400, "존재하지 않는 계획 식별자입니다."),
@@ -28,6 +30,8 @@ public enum BaseResponseStatus {
     PUT_CHARACTER_EMPTY_ID(false, 400, "캐릭터 식별자를 입력해주세요."),
     PUT_CHARACTER_EMPTY_NAME(false, 400, "캐릭터 이름을 입력해주세요."),
     PUT_CHARACTER_LENGTH_NAME(false, 400, "캐릭터 이름을 10자 이하로 입력해주세요."),
+    PUT_MILEAGE_EMPTY_COUNT(false, 400, "추가할 마일리지를 입력해주세요."),
+    PUT_MILEAGE_WRONG_COUNT(false, 400, "마일리지는 1 이상의 수로 입력해주세요."),
 
     /**
      * 3000: Response 오류

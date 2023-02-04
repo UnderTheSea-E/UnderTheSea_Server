@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public interface UserRepository extends JpaRepository<User, Long>{
     User findByUserId(Long userId); // JPA Query Method
 
@@ -14,10 +17,19 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     @Modifying
     @Transactional
-    @Query("UPDATE User u set u.characterId = :character_id, characterName = :character_name where u.userId = :user_id")
-    void updateCharacterId(@Param("character_id") Long character_id,
+    @Query("UPDATE User u set u.characterId = :character_id, characterName = :character_name, u.updated_at = :updated_at where u.userId = :user_id")
+    void updateCharacter(@Param("character_id") Long character_id,
                                 @Param("character_name") String character_name,
+                                @Param("updated_at") Timestamp updated_at,
                                 @Param("user_id") Long user_id
+    );
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u set u.mileage = :mileage, u.updated_at = :updated_at where u.userId = :user_id")
+    void updateMileage(@Param("mileage") Long mileage,
+                           @Param("updated_at") Timestamp updated_at,
+                           @Param("user_id") Long user_id
     );
 }
 
