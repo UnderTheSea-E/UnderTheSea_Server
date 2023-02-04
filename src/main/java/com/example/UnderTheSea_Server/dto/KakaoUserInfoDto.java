@@ -1,4 +1,4 @@
-package com.example.UnderTheSea_Server.controller;
+package com.example.UnderTheSea_Server.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
 public class KakaoUserInfoDto {
     private String nickname;
     private String email;
+    private String profileImgUrl;
 
-    public KakaoUserInfoDto(String nickname, String email) {
+    public KakaoUserInfoDto(String nickname, String email, String profileImgUrl) {
         this.nickname = nickname;
         this.email = email;
+        this.profileImgUrl = profileImgUrl;
     }
 }
