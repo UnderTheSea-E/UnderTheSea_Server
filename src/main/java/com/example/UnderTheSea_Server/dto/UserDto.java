@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Repository
-public class KakaoUserDto {
+public class UserDto {
     private Timestamp created_at = new Timestamp(new Date().getTime());
     private Timestamp updated_at = new Timestamp(new Date().getTime());
 
