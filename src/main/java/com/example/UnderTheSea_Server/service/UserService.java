@@ -2,10 +2,7 @@ package com.example.UnderTheSea_Server.service;
 
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.domain.User;
-import com.example.UnderTheSea_Server.model.PutCharacterReq;
-import com.example.UnderTheSea_Server.model.PutCharacterRes;
-import com.example.UnderTheSea_Server.model.PutMileageReq;
-import com.example.UnderTheSea_Server.model.PutMileageRes;
+import com.example.UnderTheSea_Server.model.*;
 import com.example.UnderTheSea_Server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,12 +29,31 @@ public class UserService implements UserDetailsService {
     }
 
     //@Transactional
+    public GetUserRes selectUser(User userByJwt) throws BaseException{
+        try{
+            //user 정보 가져오기
+            GetUserRes getUserRes = new GetUserRes(
+                    userByJwt.getUserId(),
+                    userByJwt.getEmail(),
+                    userByJwt.getNickname(),
+                    userByJwt.getProfileImgUrl(),
+                    userByJwt.getCharacterId(),
+                    userByJwt.getCharacterName(),
+                    userByJwt.getStatus());
+
+            return getUserRes;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    //@Transactional
     public PutCharacterRes createCharacter(User userByJwt, PutCharacterReq putCharacterReq) throws BaseException{
         try{
             //user table에서 사용자의 캐릭터 정보 update하기
             userRepository.updateCharacter(putCharacterReq.character_id, putCharacterReq.character_name, updated_at, userByJwt.getUserId());
 
-            return new PutCharacterRes(userByJwt.getUserId(), putCharacterReq.character_id);
+            return new PutCharacterRes(putCharacterReq.character_id);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
