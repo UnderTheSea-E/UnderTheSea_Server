@@ -3,10 +3,7 @@ package com.example.UnderTheSea_Server.controller;
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.config.BaseResponse;
 import com.example.UnderTheSea_Server.domain.User;
-import com.example.UnderTheSea_Server.model.PutCharacterReq;
-import com.example.UnderTheSea_Server.model.PutCharacterRes;
-import com.example.UnderTheSea_Server.model.PutMileageReq;
-import com.example.UnderTheSea_Server.model.PutMileageRes;
+import com.example.UnderTheSea_Server.model.*;
 import com.example.UnderTheSea_Server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +15,24 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    /**
+     * Get Character API
+     * [GET] /user
+     * @return BaseResponse<GetMileageRes>
+     * 사용자 정보 select
+     */
+    @GetMapping("/userInfo")
+    public BaseResponse<GetUserRes> getUser() {
+        try{
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            GetUserRes getUserRes = userService.selectUser(userByJwt);
+            return new BaseResponse<>(getUserRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
     /**
      * Put Character API

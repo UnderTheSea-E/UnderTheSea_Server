@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PutCharacterRes {
-    public long user_id;
+    //public long user_id;
     public long character_id;
 }
