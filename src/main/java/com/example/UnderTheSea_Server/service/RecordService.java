@@ -1,10 +1,10 @@
 package com.example.UnderTheSea_Server.service;
 
-import com.example.UnderTheSea_Server.domain.Record
+import com.example.UnderTheSea_Server.domain.Record;
 import com.example.UnderTheSea_Server.dto.RecordDto;
 import com.example.UnderTheSea_Server.model.PutRecordReq;
 import com.example.UnderTheSea_Server.model.PutRecordRes;
-import com.example.UnderTheSea_Server.repository.RecordRepository
+import com.example.UnderTheSea_Server.repository.RecordRepository;
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.model.PostRecordReq;
 import com.example.UnderTheSea_Server.model.PostRecordRes;
