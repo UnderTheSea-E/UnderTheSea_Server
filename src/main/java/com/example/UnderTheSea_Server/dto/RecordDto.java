@@ -12,9 +12,10 @@ public class RecordDto {
     private Timestamp created_at = new Timestamp(new Date().getTime());
     private Timestamp updated_at = new Timestamp(new Date().getTime());
 
-    public Record insertRecord(String img_url, String content, int satisfaction) {
+    public Record insertRecord(String img_url, String content, int satisfaction, User user) {
         com.example.UnderTheSea_Server.domain.Record recordEntity = Record.builder()
                 .img_url(img_url)
+                .user(user)
                 .content(content)
                 .satisfaction(satisfaction)
                 .status(RecordStatus.ACTIVE)

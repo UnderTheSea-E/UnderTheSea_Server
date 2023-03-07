@@ -14,19 +14,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface RecordRepository extends JpaRepository<Record, Long>{
+public interface RecordRepository extends JpaRepository<Record, Long> {
 
     List<Record> findByUserAndDate(User user, LocalDate date);
 
-    Record findByUserAndRecordId(User user, Long record_id);
+    //Record findByUserAndRecord_id(User user, Long record_id);
 
     @Modifying
     @Transactional
-    @Query("UPDATE Record R set R.satisfaction = :satisfaction, R.content = :content, R.img_url = :img_url where R.recordId = :record_id and R.user = :user")
+    @Query("UPDATE Record R set R.satisfaction = :satisfaction, R.content = :content, R.img_url = :img_url where R.record_id = :record_id and R.user = :user")
     void updateImgAndContent(@Param("img_url") String img_url,
-                                @Param("content") String content,
-                                @Param("record_id") Long plan_id,
-                                @Param("satisfaction") Integer satisfaction
+                             @Param("content") String content,
+                             @Param("record_id") Long record_id,
+                             @Param("satisfaction") Integer satisfaction,
+                             @Param("user") User user
     );
-
 }
+

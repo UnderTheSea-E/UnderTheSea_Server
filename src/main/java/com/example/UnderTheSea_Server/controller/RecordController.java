@@ -3,13 +3,15 @@ package com.example.UnderTheSea_Server.controller;
 
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.config.BaseResponse;
+import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.model.PostRecordReq;
 import com.example.UnderTheSea_Server.model.PostRecordRes;
 import com.example.UnderTheSea_Server.service.RecordService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.example.UnderTheSea_Server.jwt.JwtService
+import com.example.UnderTheSea_Server.jwt.JwtService;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
@@ -35,8 +37,10 @@ public class RecordController {
         }
 
         try{
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Long userIdByJwt = userByJwt.getUserId();
 
-            PostRecordRes postRecordRes = recordService.createRecord(postRecordReq);
+            PostRecordRes postRecordRes = recordService.createRecord(postRecordReq, userByJwt);
             return new BaseResponse<>(postRecordRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
