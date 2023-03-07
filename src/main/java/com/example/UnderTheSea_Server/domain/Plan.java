@@ -27,6 +27,9 @@ public class Plan {
     @JsonIgnore
     private User user;
 
+    @Column(nullable = false)
+    private String title;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_id")
     private User friend;

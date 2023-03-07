@@ -36,6 +36,7 @@ public class PlanService {
             Plan plan = planRepository.save(
                     planDto.insertPlan(
                             user,
+                            postPlanReq.title,
                             friend,
                             postPlanReq.content,
                             postPlanReq.date));

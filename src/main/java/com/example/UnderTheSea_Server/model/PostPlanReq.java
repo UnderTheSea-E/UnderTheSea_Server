@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostPlanReq {
+    public String title;
     public Long friend_id;
     public String content;
     public LocalDate date;
