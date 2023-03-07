@@ -2,16 +2,34 @@ package com.example.UnderTheSea_Server.repository;
 
 import com.example.UnderTheSea_Server.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.Date;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>{
+    User findByUserId(Long userId); // JPA Query Method
 
-    // Jpa Naming 전략
-    // SELECT * FROM member WHERE id = ?
-    // Insert into member ( user_id, password, user_name, createdate, email, role) values ( 'hermeswing', '$2a$10$C4BZPH4raAlKGrvy9dtyyufBp56af2W6fge0hD1wLctWvNEjrK.AG', '홍길동', now(), 'hermeswing@test.com', 'ROLE_ADMIN')
-    // id:1, pw:1234
-    User findByUserId(String userId); // JPA Query Method
+    User findByEmail(String kakaoEmail);
 
-    Optional<Object> findByUserEmail(String kakaoEmail);
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u set u.characterId = :character_id, characterName = :character_name, u.updated_at = :updated_at where u.userId = :user_id")
+    void updateCharacter(@Param("character_id") Long character_id,
+                                @Param("character_name") String character_name,
+                                @Param("updated_at") Timestamp updated_at,
+                                @Param("user_id") Long user_id
+    );
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u set u.mileage = :mileage, u.updated_at = :updated_at where u.userId = :user_id")
+    void updateMileage(@Param("mileage") Long mileage,
+                           @Param("updated_at") Timestamp updated_at,
+                           @Param("user_id") Long user_id
+    );
 }
+

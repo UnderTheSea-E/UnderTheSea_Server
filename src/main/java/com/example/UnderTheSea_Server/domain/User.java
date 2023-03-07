@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import io.swagger.annotations.Contact;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,16 +19,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "User")
 
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(nullable = false)
     private String email;
@@ -37,11 +42,14 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String profileImgUrl;
 
-    @Column(nullable = true)
-    private Long character_id;
+    @Column(name = "character_id", nullable = true)
+    private Long characterId;
+
+    @Column(name = "character_name", nullable = true)
+    private String characterName;
 
     @Column(nullable = true)
-    private String character_name;
+    private Long mileage;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
@@ -55,15 +63,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Date updated_at;
 
-
     @Builder
-    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, UserStatus status, Date created_at, Date updated_at) {
-        this.user_id = user_id;
+    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, Long mileage, UserStatus status, Date created_at, Date updated_at) {
+        this.userId = user_id;
         this.email = email;
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
-        this.character_id = character_id;
-        this.character_name = character_name;
+        this.characterId = character_id;
+        this.characterName = character_name;
+        this.mileage = mileage;
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -72,6 +80,7 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,7 +96,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user_id.toString();
+        return userId.toString();
     }
 
     @Override
@@ -109,5 +118,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }
