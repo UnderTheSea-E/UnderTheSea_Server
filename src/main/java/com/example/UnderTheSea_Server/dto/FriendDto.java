@@ -2,6 +2,7 @@ package com.example.UnderTheSea_Server.dto;
 
 import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.User;
+import com.example.UnderTheSea_Server.domain.UserStatus;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -17,6 +18,7 @@ public class FriendDto {
         Friend friendEntity = Friend.builder()
                 .user1(user1)
                 .user2(user2)
+                .status(UserStatus.ACTIVE)
                 .created_at(created_at)
                 .updated_at(updated_at)
                 .build();

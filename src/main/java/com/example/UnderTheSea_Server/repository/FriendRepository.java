@@ -10,5 +10,10 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
 
 
 
-    
+
+
+
+
+
+
 }
