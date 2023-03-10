@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,4 +40,14 @@ public class Record {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date updated_at;
+
+    public Record(Long record_id, String content, int satisfaction, RecordStatus status, String img_url, Date created_at, Date updated_at) {
+        this.record_id = record_id;
+        this.content = content;
+        this.satisfaction = satisfaction;
+        this.status = status;
+        this.img_url = img_url;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
 }
