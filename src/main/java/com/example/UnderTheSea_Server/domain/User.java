@@ -1,6 +1,11 @@
 package com.example.UnderTheSea_Server.domain;
 
 import io.swagger.annotations.Contact;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import io.swagger.annotations.Contact;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +26,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "User")
-public class User implements UserDetails{
+
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -39,8 +45,11 @@ public class User implements UserDetails{
     @Column(name = "character_id", nullable = true)
     private Long characterId;
 
+    @Column(name = "character_name", nullable = true)
+    private String characterName;
+
     @Column(nullable = true)
-    private String character_name;
+    private Long mileage;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
@@ -55,19 +64,21 @@ public class User implements UserDetails{
     private Date updated_at;
 
     @Builder
-    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, UserStatus status, Date created_at, Date updated_at) {
+    public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, Long mileage, UserStatus status, Date created_at, Date updated_at) {
         this.userId = user_id;
         this.email = email;
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
         this.characterId = character_id;
-        this.character_name = character_name;
+        this.characterName = character_name;
+        this.mileage = mileage;
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
 

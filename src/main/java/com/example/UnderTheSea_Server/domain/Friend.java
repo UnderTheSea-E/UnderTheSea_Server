@@ -26,6 +26,10 @@ public class Friend {
     @JoinColumn(name = "your_id")
     private User user2;
 
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'ACTIVE'")
+    private UserStatus status;
+
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date created_at;

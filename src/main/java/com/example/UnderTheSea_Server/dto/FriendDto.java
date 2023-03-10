@@ -1,5 +1,6 @@
 package com.example.UnderTheSea_Server.dto;
 
+import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.User;
 import org.springframework.stereotype.Repository;
 
@@ -7,18 +8,19 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Repository
-public class KakaoUserDto {
+public class FriendDto {
+
     private Timestamp created_at = new Timestamp(new Date().getTime());
     private Timestamp updated_at = new Timestamp(new Date().getTime());
 
-    public User insertUser(String email, String nickname, String profile) {
-        User userEntity = User.builder()
-                .email(email)
-                .nickname(nickname)
-                .profileImgUrl(profile)
+    public Friend insertFriend(User user1, User user2) {
+        Friend friendEntity = Friend.builder()
+                .user1(user1)
+                .user2(user2)
                 .created_at(created_at)
                 .updated_at(updated_at)
                 .build();
-        return userEntity;
+        return friendEntity;
     }
+
 }
