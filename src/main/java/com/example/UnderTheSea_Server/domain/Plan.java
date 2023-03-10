@@ -30,9 +30,9 @@ public class Plan {
     @Column(nullable = false)
     private String title;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    //@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_id")
-    private User friend;
+    private Long friend;
 
     @Column(nullable = false)
     private String content;
