@@ -3,6 +3,7 @@ package com.example.UnderTheSea_Server.controller;
 
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.config.BaseResponse;
+import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.model.GetFriendRes;
 import com.example.UnderTheSea_Server.model.GetPlanRes;
@@ -22,30 +23,22 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.*;
 @RestController
 @RequiredArgsConstructor
 public class FriendController {
-
-
+    public final FriendService friendService;
     /**
-     * Post Friend API
-     * [POST] /friends
-     * @return BaseResponse<PostFriendRes>
+     * Get Friend API
+     * [GET] /friend
+     * @return BaseResponse<GetFriendRes>
      */
-    @PostMapping("/friends")
-    public BaseResponse<PostFriendRes> createFriend(@RequestParam("your_id") long your_id) {
-        if(your_id < 0){
-            return new BaseResponse<>(POST_PLAN_EMPTY_FRIEND);
-        }
-
+    @GetMapping("/friends")
+    public BaseResponse<GetFriendRes> createFriend() {
         try{
-
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-            PostFriendRes postFriendRes = FriendService.createFriend(userIdByJwt, your_id);
-            return new BaseResponse<>(postFriendRes);
+            GetFriendRes getFriendRes = friendService.selectFriends(userByJwt);
+            return new BaseResponse<>(getFriendRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-
     
 
 }

@@ -58,7 +58,7 @@ public class PlanController {
      * @return BaseResponse<GetPlansRes>
      */
     @GetMapping("/plans")
-    public BaseResponse<GetPlansRes> selectPlans(@RequestParam("date\") @DateTimeFormat(pattern = \"yyyy-MM-dd") LocalDate date) {
+    public BaseResponse<GetPlansRes> selectPlans(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         if(date == null){
             return new BaseResponse<>(GET_PLAN_EMPTY_DATE);
         }
