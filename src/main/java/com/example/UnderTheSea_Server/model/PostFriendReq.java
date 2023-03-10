@@ -11,7 +11,5 @@ import lombok.NoArgsConstructor;
 public class PostFriendReq {
 
     public Long friend_id;
-    public User user1;
-    public User user2;
 
 }

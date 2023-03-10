@@ -4,10 +4,13 @@ package com.example.UnderTheSea_Server.controller;
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.config.BaseResponse;
 import com.example.UnderTheSea_Server.domain.User;
+import com.example.UnderTheSea_Server.model.GetFriendRes;
+import com.example.UnderTheSea_Server.model.GetPlanRes;
 import com.example.UnderTheSea_Server.model.PostFriendRes;
 import com.example.UnderTheSea_Server.service.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,9 +36,8 @@ public class FriendController {
         }
 
         try{
-            System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Long userIdByJwt = userByJwt.getUserId();
 
             PostFriendRes postFriendRes = FriendService.createFriend(userIdByJwt, your_id);
             return new BaseResponse<>(postFriendRes);
@@ -43,4 +45,7 @@ public class FriendController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    
+
 }

@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostFriendRes {
 
-    public Long friend_id;
+    public Long your_id;
 }
