@@ -26,8 +26,10 @@ public class PlanController {
      */
     @PostMapping("/plans")
     public BaseResponse<PostPlanRes> createPlan(@RequestBody PostPlanReq postPlanReq) {
-
-        if(postPlanReq.friend_id < 0){
+        if(postPlanReq.title.isEmpty()){
+            return new BaseResponse<>(POST_PLAN_EMPTY_FRIEND);
+        }
+        if(postPlanReq.friend < 0){
             return new BaseResponse<>(POST_PLAN_EMPTY_FRIEND);
         }
         if(postPlanReq.content.isEmpty()){
@@ -38,7 +40,7 @@ public class PlanController {
         }
 
         try{
-            System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
+            //System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass());
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Long userIdByJwt = userByJwt.getUserId();
 
@@ -56,7 +58,7 @@ public class PlanController {
      * @return BaseResponse<GetPlansRes>
      */
     @GetMapping("/plans")
-    public BaseResponse<GetPlansRes> selectPlans(@RequestParam("date\") @DateTimeFormat(pattern = \"yyyy-MM-dd") LocalDate date) {
+    public BaseResponse<GetPlansRes> selectPlans(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         if(date == null){
             return new BaseResponse<>(GET_PLAN_EMPTY_DATE);
         }

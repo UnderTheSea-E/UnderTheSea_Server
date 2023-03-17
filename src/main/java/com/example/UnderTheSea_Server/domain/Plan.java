@@ -27,9 +27,12 @@ public class Plan {
     @JsonIgnore
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(nullable = false)
+    private String title;
+
+    //@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_id")
-    private User friend;
+    private Long friend;
 
     @Column(nullable = false)
     private String content;

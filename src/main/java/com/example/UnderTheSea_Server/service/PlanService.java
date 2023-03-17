@@ -30,13 +30,14 @@ public class PlanService {
             //현재 로그인한 사용자 불러오기
             User user = userRepository.getById(userIdByJwt);
             //친구 불러오기
-            User friend = userRepository.getById(postPlanReq.friend_id);
+            //User friend = userRepository.getById(postPlanReq.friend);
 
             //계획 db에 insert하기
             Plan plan = planRepository.save(
                     planDto.insertPlan(
                             user,
-                            friend,
+                            postPlanReq.title,
+                            postPlanReq.friend,
                             postPlanReq.content,
                             postPlanReq.date));
 

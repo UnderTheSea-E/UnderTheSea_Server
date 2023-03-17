@@ -4,11 +4,10 @@ import com.example.UnderTheSea_Server.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetFriendRes {
-
-    public User user1;
-    public User user2;
-
+    public List<User> friend;
 }
