@@ -1,5 +1,6 @@
 package com.example.UnderTheSea_Server.repository;
 
+import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,11 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long>{
+
     User findByUserId(Long userId); // JPA Query Method
 
-    User findByEmail(String kakaoEmail);
+    User findByEmail(String email);
+
 
     @Modifying
     @Transactional

@@ -26,22 +26,37 @@ public class FriendController {
     public final FriendService friendService;
 
     /**
-     * Get Friend API
-     * [GET] /friend
-     * @return BaseResponse<GetFriendRes>
+     * Post  Friend API
+     * [POST] /friend
+     * @return BaseResponse<PostFriendRes>
      */
     @PostMapping("/friends")
-    public BaseResponse<PostFriendRes> createFriend(@RequestParam("your_id") long your_id) {
-        if(your_id < 0){
+    public BaseResponse<PostFriendRes> createFriend(@RequestParam("email") String email) { //여기서는 your_id 대신 email로 하기
+        if(email.isEmpty()){
             return new BaseResponse<>(POST_PLAN_EMPTY_FRIEND);
         }
-
         try{
 
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            PostFriendRes postFriendRes = FriendService.createFriend(userIdByJwt, your_id);
+            PostFriendRes postFriendRes = friendService.createFriend(userByJwt, email);
             return new BaseResponse<>(postFriendRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * Get Friend API
+     * [GET] /friend
+     * @return BaseResponse<GetFriendRes>
+     */
+    @GetMapping("/friends")
+    public BaseResponse<GetFriendRes> createFriend() {
+        try{
+            User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            GetFriendRes getFriendRes = friendService.selectFriends(userByJwt);
+            return new BaseResponse<>(getFriendRes);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }

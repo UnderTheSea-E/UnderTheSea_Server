@@ -3,6 +3,7 @@ package com.example.UnderTheSea_Server.service;
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.User;
+import com.example.UnderTheSea_Server.dto.FriendDto;
 import com.example.UnderTheSea_Server.model.GetFriendRes;
 import com.example.UnderTheSea_Server.model.GetUserRes;
 import com.example.UnderTheSea_Server.model.PostFriendRes;
@@ -22,6 +23,10 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_
 
 public class FriendService {
     public final FriendRepository friendRepository;
+    public final FriendDto friendDto;
+    public final UserRepository userRepository;
+
+    //친구 불러오기
     //@Transactional
     public GetFriendRes selectFriends(User userByJwt) throws BaseException {
         try{
@@ -37,22 +42,22 @@ public class FriendService {
         }
     }
 
-    public final FriendRepository friendRepository;
-    public final FriendDto friendDto;
 
-    //계획 저장하기
+    //친구 저장하기
     @Transactional
-    public PostFriendRes createFriend(User userByJwt, Long your_id) throws BaseException {
+    public PostFriendRes createFriend(User userByJwt, String email) throws BaseException { // 메일여기는 이메일
         try{
 
-            //친구 불러오기
-            User friend = UserRepository.findByUserId(your_id);
+            //이메일 받기
+            User friend = userRepository.findByEmail(email); // 이메일로 받아서, 그 이메일에 해당하는 아이디를 찾을 것
 
-            //계획 db에 insert하기
+            //Long your_id = friend.getUserId(); //받은 이메일에 맞는 user_ID 가져오기
+
+            //계획 db에 insert 하기
             Friend friends = friendRepository.save(
                     friendDto.insertFriend(
                             userByJwt,
-                            your_id
+                            friend // 여기 저장하는건 이메일에 해당하는 그 아이디 맞음
                             ));
 
             return new PostFriendRes(friends.getFriend_id());
@@ -60,7 +65,5 @@ public class FriendService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-
-
 
 }
