@@ -66,7 +66,7 @@ public class PlanService {
             //계획 db에서 select하기
             Plan plan = planRepository.findByUserAndPlanId(userByJwt, plan_id);
 
-            return new GetPlanRes(plan);
+            return new GetPlanRes(plan.getPlanId(), plan.getTitle(), plan.getFriend(), plan.getContent(), plan.getDate(), plan.getStatus());
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
