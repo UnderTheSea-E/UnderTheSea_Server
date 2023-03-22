@@ -1,6 +1,7 @@
 package com.example.UnderTheSea_Server.service;
 
 import com.example.UnderTheSea_Server.config.BaseException;
+import com.example.UnderTheSea_Server.controller.FirebaseController;
 import com.example.UnderTheSea_Server.dto.KakaoUserInfoDto;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.UserDto;
@@ -13,6 +14,7 @@ import com.example.UnderTheSea_Server.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.auth.FirebaseAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
@@ -35,11 +37,21 @@ public class KakaoUserService {
     public final JwtService jwtService;
     private User kakaoUser;
 
+    private FirebaseController firebaseController;
+    String customToken = "any";
+
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
         // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        //firebase jwt 생성
+        try {
+            customToken = FirebaseAuth.getInstance().createCustomToken(accessToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // HTTP 요청 보내기
         HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
@@ -72,7 +84,7 @@ public class KakaoUserService {
         String nickname = kakaoUserInfo.getNickname();
         String profile = kakaoUserInfo.getProfileImgUrl();
         kakaoUser = userRepository.findByEmail(kakaoEmail);
-                //.orElse(null);
+        //.orElse(null);
 
         if (kakaoUser == null) {
             kakaoUser = userRepository.save(userDto.insertUser(kakaoEmail, nickname, profile));
@@ -104,10 +116,11 @@ public class KakaoUserService {
                     kakaoUser.getUserId(),
                     kakaoUserInfo.getNickname(),
                     kakaoUserInfo.getEmail(),
-                    kakaoUser.getProfileImgUrl()
+                    kakaoUser.getProfileImgUrl(),
+                    customToken
             );
             return postUserRes;
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }

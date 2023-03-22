@@ -59,7 +59,8 @@ public class GoogleUserService {
                     googleUser.getUserId(),
                     googleUserInfo.getNickname(),
                     googleUserInfo.getEmail(),
-                    googleUser.getProfileImgUrl()
+                    googleUser.getProfileImgUrl(),
+                    "any"
             );
             return postUserRes;
         } catch(Exception exception) {

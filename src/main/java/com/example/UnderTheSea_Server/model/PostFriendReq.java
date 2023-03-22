@@ -1,11 +1,15 @@
 package com.example.UnderTheSea_Server.model;
 
+
+import com.example.UnderTheSea_Server.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class PutCharacterRes {
-    //public long user_id;
-    public long character_id;
+
+public class PostFriendReq {
+
+    public Long friend_id;
+
 }

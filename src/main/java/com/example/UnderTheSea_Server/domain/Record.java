@@ -1,9 +1,11 @@
 package com.example.UnderTheSea_Server.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,9 +23,8 @@ public class Record {
     @Column(nullable = true)
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    @ColumnDefault("'UNSATISFIED'")
-    private RecordSatisfaction satisfaction;
+    @Column(nullable = true)
+    private int satisfaction;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
@@ -39,4 +40,14 @@ public class Record {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date updated_at;
+
+    public Record(Long record_id, String content, int satisfaction, RecordStatus status, String img_url, Date created_at, Date updated_at) {
+        this.record_id = record_id;
+        this.content = content;
+        this.satisfaction = satisfaction;
+        this.status = status;
+        this.img_url = img_url;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
 }

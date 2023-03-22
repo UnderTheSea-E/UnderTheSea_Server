@@ -10,4 +10,6 @@ public class PostUserRes {
     public String nickname;
     public String email;
     public String profileImgUrl;
+    public String firebaseJwt;
+
 }
