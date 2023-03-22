@@ -18,13 +18,17 @@ public class Friend {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long friend_id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "my_id")
     private User user1;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "your_id")
     private User user2;
+
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'ACTIVE'")
+    private UserStatus status;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)

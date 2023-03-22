@@ -8,17 +8,23 @@ import com.example.UnderTheSea_Server.model.PostUserRes;
 import com.example.UnderTheSea_Server.service.GoogleUserService;
 import com.example.UnderTheSea_Server.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
 public class GoogleLoginController {
-    public GoogleUserService googleUserService;
+    public final GoogleUserService googleUserService;
 
     /**
      * Post User API (google)
@@ -34,5 +40,5 @@ public class GoogleLoginController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-
 }
+
