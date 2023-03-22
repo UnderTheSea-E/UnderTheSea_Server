@@ -1,10 +1,12 @@
 package com.example.UnderTheSea_Server.service;
 
 import com.example.UnderTheSea_Server.config.BaseException;
+import com.example.UnderTheSea_Server.domain.Friend;
 import com.example.UnderTheSea_Server.domain.Plan;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.PlanDto;
 import com.example.UnderTheSea_Server.model.*;
+import com.example.UnderTheSea_Server.repository.FriendRepository;
 import com.example.UnderTheSea_Server.repository.PlanRepository;
 import com.example.UnderTheSea_Server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -66,7 +68,9 @@ public class PlanService {
             //계획 db에서 select하기
             Plan plan = planRepository.findByUserAndPlanId(userByJwt, plan_id);
 
-            return new GetPlanRes(plan);
+            String friend_email = userRepository.findById(plan.getFriend()).get().getEmail();
+
+            return new GetPlanRes(plan.getPlanId(), plan.getTitle(), friend_email, plan.getContent(), plan.getDate(), plan.getStatus());
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
