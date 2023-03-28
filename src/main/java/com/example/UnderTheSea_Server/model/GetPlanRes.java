@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class GetPlanRes {
     public Long planId;
     public String title;
-    public String freind_email;
+    public String friend_email;
     public String content;
     public LocalDate date;
     public PlanStatus status;
