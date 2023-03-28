@@ -33,6 +33,7 @@ public class GoogleUserService {
         if (googleUser == null) {
             googleUser = userRepository.save(userDto.insertUser(googleEmail, nickname, profile));
         }
+
         return googleUser;
     }
 
