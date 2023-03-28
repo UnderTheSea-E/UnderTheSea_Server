@@ -1,7 +1,7 @@
 package com.example.UnderTheSea_Server.service;
 
 import com.example.UnderTheSea_Server.config.BaseException;
-import com.example.UnderTheSea_Server.controller.FirebaseController;
+//import com.example.UnderTheSea_Server.controller.FirebaseController;
 import com.example.UnderTheSea_Server.dto.KakaoUserInfoDto;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.UserDto;
@@ -37,7 +37,7 @@ public class KakaoUserService {
     public final JwtService jwtService;
     private User kakaoUser;
 
-    private FirebaseController firebaseController;
+    //private FirebaseController firebaseController;
     String customToken = "any";
 
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
