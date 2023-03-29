@@ -19,9 +19,9 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_
 @Service
 @RequiredArgsConstructor
 public class GoogleUserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     private User googleUser;
-    private UserDto userDto;
+    public UserDto userDto;
 
     private User registerGoogleUserIfNeed(GoogleUserInfoDto googleUserInfo) {
         // DB 에 중복된 email이 있는지 확인
