@@ -1,8 +1,7 @@
 package com.example.UnderTheSea_Server.jwt;
 
 import com.example.UnderTheSea_Server.domain.User;
-import com.example.UnderTheSea_Server.model.PostUserReq;
-import com.example.UnderTheSea_Server.repository.UserRepository;
+import com.example.UnderTheSea_Server.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -31,7 +30,7 @@ public class JwtTokenProvider {
     private static final long accessTokenValidTime = 300 * 60 * 1000L;
     private static final long refreshTokenValidTime = 3000 * 60 * 1000L;
     //jwt 토큰 생성
-    private final UserDetailsService userDetailsService;
+    private final UserService userDetailsService;
 
     //객체 초기화, secretKey를 Base64로 인코딩
     @PostConstruct
@@ -67,14 +66,14 @@ public class JwtTokenProvider {
     }
 
     //JWT 토큰에서 인증 정보 조회
-    public Authentication getAuthentication(String token){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+    public Authentication getAuthentication(String username){
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(username));
         return new UsernamePasswordAuthenticationToken(userDetails, " ", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원 정보 추출
-    public String getUserPk(String token) {
-        return Jwts.parser().setSigningKey(jwtSecretKey).parseClaimsJws(token).getBody().getSubject();
+    public String getUserPk(String username) {
+        return Jwts.parser().setSigningKey(jwtSecretKey).parseClaimsJws(username).getBody().getSubject();
     }
 
     // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'

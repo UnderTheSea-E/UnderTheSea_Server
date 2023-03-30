@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,17 +21,12 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Plan p set p.friend = :friend, p.content = :content where p.planId = :plan_id and p.user = :user")
-    void updateFriendAndContent(@Param("friend") User friend,
+    @Query("UPDATE Plan p set p.title = :title, p.friend = :friend, p.content = :content, p.updated_at = :updated_at where p.planId = :plan_id")
+    void updatePlan(
+                    @Param("title") String title,
+                    @Param("friend") Long friend,
                     @Param("content") String content,
-                    @Param("plan_id") Long plan_id,
-                    @Param("user") User user
+                    @Param("updated_at") Timestamp updated_at,
+                    @Param("plan_id") Long plan_id
     );
-
-    /*
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE Plan p set p.friend_id = :friend and p.content = :content where p.plan_id = :plan_id and p.user_id = :user", nativeQuery = true)
-    Plan updatePlan(User user, long plan_id, long friend_id, String content);
-     */
 }

@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_ERROR;
@@ -21,12 +23,14 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_
 @Service
 @RequiredArgsConstructor
 public class PlanService {
-    public final PlanRepository planRepository;
-    public final PlanDto planDto;
-    public final UserRepository userRepository;
+    private final PlanRepository planRepository;
+    private final PlanDto planDto;
+    private final UserRepository userRepository;
+
+    private Timestamp updated_at = new Timestamp(new Date().getTime());
 
     //계획 저장하기
-    @Transactional
+    //@Transactional
     public PostPlanRes createPlan(Long userIdByJwt, PostPlanReq postPlanReq) throws BaseException {
         try{
             //현재 로그인한 사용자 불러오기
@@ -79,17 +83,17 @@ public class PlanService {
     //계획 수정하기
     public PutPlanRes updatePlans(User userByJwt, PutPlanReq putPlanReq) throws BaseException {
         try{
-            User friend = userRepository.findById(putPlanReq.friend_id).get();
+            //User friend = userRepository.findById(putPlanReq.friend).get();
 
             //계획 db에서 update하기
-            planRepository.updateFriendAndContent(
-                    friend,
+            planRepository.updatePlan(putPlanReq.title,
+                    putPlanReq.friend,
                     putPlanReq.content,
-                    putPlanReq.plan_id,
-                    userByJwt
+                    updated_at,
+                    putPlanReq.planId
             );
 
-            return new PutPlanRes(putPlanReq.plan_id);
+            return new PutPlanRes(putPlanReq.planId);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

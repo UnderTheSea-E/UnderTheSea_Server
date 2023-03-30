@@ -109,19 +109,15 @@ public class PlanController {
      */
     @PutMapping("/plans")
     public BaseResponse<PutPlanRes> updatePlans(@RequestBody PutPlanReq putPlanReq) {
-        if(putPlanReq.plan_id == null){
-            return new BaseResponse<>(PUT_PLAN_EMPTY_ID);
-        }
-
-        if(putPlanReq.plan_id < 0){
+        if(putPlanReq.planId < 0){
             return new BaseResponse<>(PUT_PLAN_WRONG_ID);
         }
 
-        if(putPlanReq.friend_id == null){
+        if(putPlanReq.friend == null){
             return new BaseResponse<>(POST_PLAN_EMPTY_FRIEND);
         }
 
-        if(putPlanReq.friend_id < 0){
+        if(putPlanReq.friend < 0){
             return new BaseResponse<>(POST_PLAN_WRONG_FRIEND);
         }
 

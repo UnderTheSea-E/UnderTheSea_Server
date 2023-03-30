@@ -5,9 +5,6 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class PutPlanReq {
-    public Long planId;
-    public Long friend;
-    public String title;
-    public String content;
+public class PostRecordRes {
+    public Long record_id;
 }

@@ -42,6 +42,7 @@ public class UserController {
     //@ResponseBody
     @PutMapping("/character")
     public BaseResponse<PutCharacterRes> createCharacter(@RequestBody PutCharacterReq putCharacterReq) {
+        /*
         if(putCharacterReq.character_id == null){
             return new BaseResponse<>(PUT_CHARACTER_EMPTY_ID);
         }
@@ -57,6 +58,7 @@ public class UserController {
         if(putCharacterReq.character_name.length() > 10){
             return new BaseResponse<>(PUT_CHARACTER_LENGTH_NAME);
         }
+         */
 
         try{
             User userByJwt = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
