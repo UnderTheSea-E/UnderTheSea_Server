@@ -1,4 +1,4 @@
-#### ✅You can use our distributed server's ip address, 34.22.70.141 
+#### ✅You can use our distributed server's ip address, 34.22.70.141:3000
 ## How to run
 ### 0️⃣ git clone https://github.com/UnderTheSea-E/UnderTheSea_Server/ using git bash
 ### 1️⃣ Open in intellij idea or anything you can run springboot.
