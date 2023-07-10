@@ -38,3 +38,4 @@ out/
 
 application.yml
 application.properties
+src/main/java/com/example/UnderTheSea_Server/log/test.log
