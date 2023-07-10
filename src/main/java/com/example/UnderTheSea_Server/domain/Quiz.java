@@ -27,9 +27,6 @@ public class Quiz {
     @Column(nullable = false)
     private String answer;
 
-    @Column(nullable = false)
-    private String option;
-
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date created_at;
