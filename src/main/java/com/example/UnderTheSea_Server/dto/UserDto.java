@@ -2,6 +2,7 @@ package com.example.UnderTheSea_Server.dto;
 
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.domain.UserStatus;
+import com.example.UnderTheSea_Server.jwt.RefreshToken;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -22,5 +23,12 @@ public class UserDto {
                 .updated_at(updated_at)
                 .build();
         return userEntity;
+    }
+
+    public RefreshToken insertRefreshToken(String token) {
+        RefreshToken refreshTokenEntity = RefreshToken.builder()
+                .refreshToken(token)
+                .build();
+        return refreshTokenEntity;
     }
 }
