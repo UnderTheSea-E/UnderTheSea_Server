@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostUserRes {
-    public Long id;
+    public Long userId;
     public String nickname;
     public String email;
     public String profileImgUrl;
