@@ -2,7 +2,6 @@ package com.example.UnderTheSea_Server.controller;
 
 import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.config.BaseResponse;
-import com.example.UnderTheSea_Server.model.PostPlanRes;
 import com.example.UnderTheSea_Server.model.PostUserReq;
 import com.example.UnderTheSea_Server.model.PostUserRes;
 import com.example.UnderTheSea_Server.service.KakaoUserService;

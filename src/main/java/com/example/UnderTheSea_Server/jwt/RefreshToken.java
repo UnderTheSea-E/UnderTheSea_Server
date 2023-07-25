@@ -19,7 +19,7 @@ public class RefreshToken {
     @Column(name = "REFRESH_TOKEN", nullable = false)
     private String refreshToken;
 
-    @Column(nullable = false)
+    @Column(name = "KEY_ID", nullable = false)
     private String keyId;
 
     @Builder

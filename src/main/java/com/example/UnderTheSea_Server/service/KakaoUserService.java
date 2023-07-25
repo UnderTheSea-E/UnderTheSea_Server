@@ -12,13 +12,11 @@ import com.example.UnderTheSea_Server.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.firebase.auth.FirebaseAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -45,12 +43,13 @@ public class KakaoUserService {
         headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        //firebase jwt 생성
-//        try {
-//            customToken = FirebaseAuth.getInstance().createCustomToken(accessToken);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        /*firebase jwt 생성
+        try {
+            customToken = FirebaseAuth.getInstance().createCustomToken(accessToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+         */
 
         // HTTP 요청 보내기
         HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
