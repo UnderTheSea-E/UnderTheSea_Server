@@ -1,6 +1,7 @@
 package com.example.UnderTheSea_Server.jwt;
 
 import com.example.UnderTheSea_Server.domain.User;
+import com.example.UnderTheSea_Server.dto.UserDto;
 import com.example.UnderTheSea_Server.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -32,6 +33,8 @@ public class JwtTokenProvider {
     private static final long refreshTokenValidTime = 3000 * 60 * 1000L;
     //jwt 토큰 생성
     private final UserService userDetailsService;
+    private static RefreshTokenRepository refreshTokenRepository;
+    private static UserDto userDto;
 
     //객체 초기화, secretKey를 Base64로 인코딩
     @PostConstruct
@@ -92,6 +95,10 @@ public class JwtTokenProvider {
         }
     }
 
+    public String resolveRefreshToken(HttpServletRequest request) {
+        return request.getHeader("Refresh");
+    }
+
     public String validateRefreshToken(RefreshToken refreshTokenObj, HttpServletResponse response){
         // refresh 객체에서 refreshToken 추출
         String refreshToken = refreshTokenObj.getRefreshToken();
@@ -102,7 +109,9 @@ public class JwtTokenProvider {
 
             //refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다.
             if (!claims.getBody().getExpiration().before(new Date())) {
-                recreationAccessToken(claims.getBody().get("sub").toString(), claims.getBody().get("roles"));
+                Token accessToken = recreationAccessToken(claims.getBody().get("sub").toString(), claims.getBody().get("roles"));
+                response.addHeader("Authorization", "BEARER" + " " + accessToken.getAccessToken());
+                return accessToken.getAccessToken();
             }
         }catch (Exception e) {
             //refresh 토큰이 만료되었을 경우, 로그인이 필요합니다.
@@ -111,7 +120,7 @@ public class JwtTokenProvider {
         return null;
     }
 
-    public String recreationAccessToken(String userId, Object roles){
+    public Token recreationAccessToken(String userId, Object roles){
 
         Claims claims = Jwts.claims().setSubject(userId); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
@@ -126,7 +135,7 @@ public class JwtTokenProvider {
                 // signature 에 들어갈 secret값 세팅
                 .compact();
 
-        return accessToken;
+        return Token.builder().accessToken(accessToken).key(userId).build();
     }
 
 }

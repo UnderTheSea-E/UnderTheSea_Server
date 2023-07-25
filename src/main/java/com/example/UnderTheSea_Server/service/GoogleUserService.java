@@ -39,9 +39,10 @@ public class GoogleUserService {
 
     private void googleUsersAuthorizationInput(HttpServletResponse response) {
         // response header에 token 추가
-        Token token = JwtTokenProvider.createToken(googleUser, "user_id");
+        Token token = JwtTokenProvider.createToken(googleUser, "user");
         //jwtService.login(token);
         response.addHeader("Authorization", "BEARER" + " " + token.getAccessToken());
+        response.addHeader("Refresh", token.getRefreshToken());
     }
 
     public PostUserRes googleLogin(PostGUserReq postGUserReq, HttpServletResponse response) throws BaseException {

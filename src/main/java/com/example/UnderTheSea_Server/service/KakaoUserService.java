@@ -5,9 +5,7 @@ import com.example.UnderTheSea_Server.config.BaseException;
 import com.example.UnderTheSea_Server.dto.KakaoUserInfoDto;
 import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.dto.UserDto;
-import com.example.UnderTheSea_Server.jwt.JwtService;
-import com.example.UnderTheSea_Server.jwt.JwtTokenProvider;
-import com.example.UnderTheSea_Server.jwt.Token;
+import com.example.UnderTheSea_Server.jwt.*;
 import com.example.UnderTheSea_Server.model.PostUserReq;
 import com.example.UnderTheSea_Server.model.PostUserRes;
 import com.example.UnderTheSea_Server.repository.UserRepository;
@@ -31,6 +29,7 @@ import static com.example.UnderTheSea_Server.config.BaseResponseStatus.DATABASE_
 @RequiredArgsConstructor
 public class KakaoUserService {
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     public final UserDto userDto;
     public final JwtService jwtService;
     private User kakaoUser;
@@ -93,11 +92,14 @@ public class KakaoUserService {
 
     private void kakaoUsersAuthorizationInput(HttpServletResponse response) {
         // response header에 token 추가
-        Token token = JwtTokenProvider.createToken(kakaoUser, "user_id");
+        Token token = JwtTokenProvider.createToken(kakaoUser, "User");
         //jwtService.login(token);
         response.addHeader("Authorization", "BEARER" + " " + token.getAccessToken());
-    }
+        response.addHeader("Refresh", token.getRefreshToken());
 
+        RefreshToken refreshToken = RefreshToken.builder().keyId(token.getKey()).refreshToken(token.getRefreshToken()).build();
+        refreshTokenRepository.save(refreshToken);
+    }
 
     public PostUserRes kakaoLogin(PostUserReq postUserReq, HttpServletResponse response) throws BaseException {
         try {
