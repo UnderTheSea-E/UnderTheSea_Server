@@ -13,10 +13,12 @@ import java.sql.Timestamp;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-    @Cacheable(value = "kakao_user_id", key = "#userId", cacheManager = "cacheManager", unless = "#userId == null")
+    //@Cacheable(value = "kakao_user_id", key = "#userId", cacheManager = "cacheManager", unless = "#userId == null")
+    //@CacheEvict(value = "kakao_user_id", key = "#userId", cacheManager = "cacheManager")
+    @CachePut(value = "kakao_user_id", key = "#userId", cacheManager = "cacheManager", unless = "#userId == null")
     User findByUserId(Long userId); // JPA Query Method
 
-    @Cacheable(value = "kakao_user_email", key = "#email", cacheManager = "cacheManager", unless = "#userId == null")
+    //@Cacheable(value = "kakao_user_email", key = "#email", cacheManager = "cacheManager", unless = "#userId == null")
     User findByEmail(String email);
 
     //@CachePut(key = "#user_id")
