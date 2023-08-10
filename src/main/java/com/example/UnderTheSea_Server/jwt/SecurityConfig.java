@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     //authenticationManager를 Bean 등록(AuthenticationFilter가 생성한 토큰을 받아 AuthenticationProvider에게 넘겨줌
     @Bean
@@ -30,11 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable()
                 .authorizeRequests() //요청에 대한 사용 권한 확인
                 .antMatchers("/test").authenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("Admin")
+                .antMatchers("/user/**").hasRole("User")
                 .antMatchers("/**").permitAll()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, refreshTokenRepository),
                         UsernamePasswordAuthenticationFilter.class);
         //토큰에 저장된 유저정보를 활용하여야 하기 때문에 CustomUserDetailService 클래스 생성
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

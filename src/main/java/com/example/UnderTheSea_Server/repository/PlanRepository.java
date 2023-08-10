@@ -2,6 +2,7 @@ package com.example.UnderTheSea_Server.repository;
 
 import com.example.UnderTheSea_Server.domain.Plan;
 import com.example.UnderTheSea_Server.domain.User;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +16,10 @@ import java.util.List;
 
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Long> {
+    @Cacheable(value = "plans", key = "#user", cacheManager = "cacheManager", unless = "#userId == null")
     List<Plan> findByUserAndDate(User user, LocalDate date);
 
+    //@Cacheable(value = "plan", key = "#plan_id", cacheManager = "cacheManager", unless = "#userId == null")
     Plan findByUserAndPlanId(User user, Long plan_id);
 
     @Modifying
