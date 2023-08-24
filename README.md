@@ -4,7 +4,7 @@
 ### 제로웨이스트 샵, 기업의 환경 이벤트 등 쉽고 재미있게 실천할 수 있는 환경 활동에 대한 정보를 제공하여 놀이 문화로 일상 속에서 자주 실천하도록 하는 것이 목표입니다.
 
 ## 개발 툴
-### Spring, MySQL, GCP
+### Spring, MySQL, GCP or any cloud server
 
 ## How to run
 ### <1>
