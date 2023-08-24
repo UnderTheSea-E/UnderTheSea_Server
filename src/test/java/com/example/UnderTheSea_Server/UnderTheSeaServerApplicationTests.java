@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -23,13 +24,14 @@ class UnderTheSeaServerApplicationTests {
 	private UserRepository userRepository;
 
 	@Test
+	@Transactional // rollback 수행
 	void contextLoads() {
 		//given
-		String email = "wyoung@gmail.com";
+		String email = "wyoung2@gmail.com";
 		User user = User.builder()
 				//.user_id(13l)
-				.nickname("woo")
-				.email("wyoung@gmail.com")
+				.nickname("woo2")
+				.email("wyoung2@gmail.com")
 				.updated_at(new Date())
 				.created_at(new Date())
 				.profileImgUrl("http")
