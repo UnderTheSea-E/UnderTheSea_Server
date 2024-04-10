@@ -3,8 +3,8 @@
 ##### 혼자서 실천이 어려운 다수를 고려해 친구, 가족 등 좋아하는 사람들과 함께 계획을 공유하고 실천하도록 설계했습니다.
 ##### 제로웨이스트 샵, 기업의 환경 이벤트 등 쉽고 재미있게 실천할 수 있는 환경 활동에 대한 정보를 제공하여 놀이 문화로 일상 속에서 자주 실천하도록 하는 것이 목표입니다.
 
-## 개발 툴
-##### Spring, MySQL, GCP or any cloud server
+## Stack
+##### SpringBoot, MySQL, GCP(compute engine, cloud storage), Firebase, Docker, Redis, etc.
 
 ## How to run
 ### <1>
