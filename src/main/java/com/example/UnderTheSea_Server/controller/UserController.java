@@ -22,6 +22,7 @@ public class UserController {
      * @return BaseResponse<GetMileageRes>
      * 사용자 정보 select
      */
+    @CrossOrigin(origins = "*", allowedHeaders = "Authorization")
     @GetMapping("/userInfo")
     public BaseResponse<GetUserRes> getUser() {
         try{
