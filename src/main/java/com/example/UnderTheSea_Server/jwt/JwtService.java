@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.http.HttpHeaders;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -17,26 +19,26 @@ public class JwtService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @Transactional
-    public void login(Token tokenDto) {
-
-        RefreshToken refreshToken = RefreshToken.builder().keyId(tokenDto.getKey()).refreshToken(tokenDto.getRefreshToken()).build();
-        String loginUserId = refreshToken.getKeyId();
-        if (refreshTokenRepository.existsByKeyId(loginUserId)) {
-            log.info("기존의 존재하는 refresh 토큰 삭제");
-            refreshTokenRepository.deleteByKeyId(loginUserId);
-        }
-        refreshTokenRepository.save(refreshToken);
-
-    }
+//    @Transactional
+//    public void login(Token tokenDto) {
+//
+//        RefreshToken refreshToken = RefreshToken.builder().keyId(tokenDto.getKey()).refreshToken(tokenDto.getRefreshToken()).build();
+//        String loginUserId = refreshToken.getKeyId();
+//        if (refreshTokenRepository.existsByKeyId(loginUserId)) {
+//            log.info("기존의 존재하는 refresh 토큰 삭제");
+//            refreshTokenRepository.deleteByKeyId(loginUserId);
+//        }
+//        refreshTokenRepository.save(refreshToken);
+//
+//    }
 
     public Optional<RefreshToken> getRefreshToken(String refreshToken) {
         return refreshTokenRepository.findByRefreshToken(refreshToken);
     }
 
-    public Map<String, String> validateRefreshToken(String refreshToken) {
+    public Map<String, String> validateRefreshToken(String refreshToken, HttpServletResponse response) {
         RefreshToken refreshToken1 = getRefreshToken(refreshToken).get();
-        String createdAccessToken = jwtTokenProvider.validateRefreshToken(refreshToken1);
+        String createdAccessToken = jwtTokenProvider.validateRefreshToken(refreshToken1, response);
 
         return createRefreshJson(createdAccessToken);
     }

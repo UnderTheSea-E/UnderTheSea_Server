@@ -1,26 +1,23 @@
 package com.example.UnderTheSea_Server.domain;
 
-import io.swagger.annotations.Contact;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "User")
+@JsonIgnoreProperties(ignoreUnknown =true)
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +54,7 @@ public class User implements UserDetails{
     @Column(nullable = false)
     private Date updated_at;
 
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Builder
     public User(Long user_id, String email, String nickname, String profileImgUrl, Long character_id, String character_name, Long mileage, UserStatus status, Date created_at, Date updated_at) {
         this.userId = user_id;
@@ -71,42 +69,54 @@ public class User implements UserDetails{
         this.updated_at = updated_at;
     }
 
+    /*
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+     */
 
-
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+        /*
         return this.roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+         */
     }
 
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Override
     public String getPassword() {
         return null;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Override
     public String getUsername() {
         return userId.toString();
     }
 
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown =true)
     @Override
     public boolean isEnabled() {
         return true;
