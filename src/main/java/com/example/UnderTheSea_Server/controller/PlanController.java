@@ -6,6 +6,7 @@ import com.example.UnderTheSea_Server.domain.User;
 import com.example.UnderTheSea_Server.model.*;
 import com.example.UnderTheSea_Server.service.PlanService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

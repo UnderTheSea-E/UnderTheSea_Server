@@ -1,18 +1,14 @@
 package com.example.UnderTheSea_Server.jwt;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Builder
 @Entity
 @Getter
-@Table(name = "T_REFRESH_TOKEN")
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "T_REFRESH_TOKEN")
 public class RefreshToken {
 
     @Id
@@ -23,7 +19,13 @@ public class RefreshToken {
     @Column(name = "REFRESH_TOKEN", nullable = false)
     private String refreshToken;
 
-    @Column(name = "KEY", nullable = false)
+    @Column(name = "KEY_ID", nullable = false)
     private String keyId;
 
+    @Builder
+    public RefreshToken(Long refreshTokenId, String refreshToken, String keyId) {
+        this.refreshTokenId = refreshTokenId;
+        this.refreshToken = refreshToken;
+        this.keyId = keyId;
+    }
 }
