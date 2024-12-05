@@ -43,6 +43,10 @@ dependencies {
 	//cache
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	//ELK
+	implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.3'
+	//junit
+
 }
 
 tasks.named('test') {
