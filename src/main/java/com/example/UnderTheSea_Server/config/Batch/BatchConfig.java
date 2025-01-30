@@ -42,6 +42,8 @@ public class BatchConfig {
                 .get("test job")
                 .start(firstStep())
                 //.next(secondStep())
+                //.on(조건) - FAILED, COMPLETED, *
+                //.to(nextStep()) - 조건에 만족할 경우 시행할 step
                 .build();
     }
 
