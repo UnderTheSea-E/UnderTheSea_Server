@@ -1,17 +1,21 @@
 package com.example.UnderTheSea_Server.config.Batch;
 
+import com.example.UnderTheSea_Server.domain.Place;
 import com.example.UnderTheSea_Server.domain.Plan;
 import com.example.UnderTheSea_Server.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
-import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.*;
 import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
@@ -22,6 +26,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Configuration
@@ -69,6 +75,32 @@ public class BatchConfig {
                 .repository(planRepository)
                 .sorts(Map.of("plan_id", Sort.Direction.ASC))
                 .build();
+    }
+
+    @Bean
+    public ItemReader<Place> crawlingReader() throws IOException {
+        Connection connection = Jsoup.connect("https://map.kakao.com/?map_type=TYPE_MAP&folderid=4049789&target=other&page=bookmark");
+        Document document = connection.get();
+        Elements elements = document.select("div.directory_info");
+
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> positions = new ArrayList<>();
+
+        return new ItemReader<Place>() {
+            @Override
+            public Place read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+
+                for(Element element: elements) {
+                    String name = element.select("div.tit_directory").text();
+                    names.add(name);
+                    String position = element.select("div.desc_directory").text();
+                    positions.add(position);
+                    Place place = new Place(name, position);
+                    return place;
+                }
+                return null;
+            }
+        };
     }
 
     // Processor
